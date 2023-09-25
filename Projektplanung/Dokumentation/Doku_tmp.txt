@@ -1,0 +1,11 @@
+  Doku (3 Tage):
+    - Aufbau:
+      - Max 10 Seiten
+      - Deckblatt
+      - Eidesstattliche erklärung
+      - Literaturverzeichnis
+      - Also Max 7 Seiten
+    -  Projektstrukturplan/ Projektdokumentation
+    - UML
+    - Stunden (Entwicklungskosten, Recourcen)
+    - Netzwerkdiagramm

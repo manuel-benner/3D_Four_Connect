@@ -1,0 +1,26 @@
+Bausteine:
+  Szene
+    - Ui Element wer dran ist
+    - Kameraführung (Input controls)
+      - Transparente bälle für auswahl
+    - Board
+      - Backendklasse mit 3d matrix
+        - Gewinncheck
+        - interne Matrix wird anhand von der zugnummer hochgezählt ... dann modulo 2 
+    - Spielsteine
+  Netzwerk (Netzwerktest mit lokalem Netzwerk)
+    - Übergabe von:
+      - Board + Spielsteine => NetworkTransform Komponente
+      - Zugstatus (= Wer ist dran?) Von Automat => Automat
+      - Spielstatus: Laufend/Zuende
+  Hauptmenü (Hotseat oder Netzwerk spiel, eingabe und farbauswahl) 
+    - Neues Spiel (aufruf von Konstrukoren)
+    - Random Funktion wer anfängt
+  Ingame Menü 
+   - Neues Spiel oder Spiel beenden
+
+
+  Addon:
+    - Replay einfach matrix serialisieren 
+    - Animation beim setzen (aufleuchten oder so)
+
