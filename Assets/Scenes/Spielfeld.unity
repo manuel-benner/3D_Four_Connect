@@ -294,7 +294,7 @@ Transform:
   m_GameObject: {fileID: 38276238}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -367,7 +367,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 3,0
 --- !u!135 &38276243
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1258,7 +1258,7 @@ Transform:
   m_GameObject: {fileID: 157634047}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1331,7 +1331,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 2,1
 --- !u!135 &157634052
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1597,7 +1597,7 @@ Transform:
   m_GameObject: {fileID: 181143283}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1670,7 +1670,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 1,0
 --- !u!135 &181143288
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2425,7 +2425,7 @@ Transform:
   m_GameObject: {fileID: 318733304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.89285696, y: 3, z: 0.89285696}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2498,7 +2498,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 0,2
 --- !u!135 &318733309
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3006,7 +3006,7 @@ Transform:
   m_GameObject: {fileID: 447511349}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3079,7 +3079,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 3,3
 --- !u!135 &447511354
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3351,6 +3351,7 @@ GameObject:
   - component: {fileID: 531574352}
   - component: {fileID: 531574351}
   - component: {fileID: 531574350}
+  - component: {fileID: 531574354}
   m_Layer: 0
   m_Name: Spielfeld
   m_TagString: Untagged
@@ -3444,6 +3445,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &531574354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531574349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9e34d25af9f64542bf8f40ffeb2308e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTurn: 0
 --- !u!1 &586551754
 GameObject:
   m_ObjectHideFlags: 0
@@ -3825,7 +3839,7 @@ Transform:
   m_GameObject: {fileID: 702920928}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3898,7 +3912,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 1,1
 --- !u!135 &702920933
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4684,7 +4698,7 @@ Transform:
   m_GameObject: {fileID: 897099910}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4757,7 +4771,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 1,3
 --- !u!135 &897099915
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5302,7 +5316,7 @@ Transform:
   m_GameObject: {fileID: 982487326}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5375,7 +5389,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 2,2
 --- !u!135 &982487331
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6272,7 +6286,7 @@ Transform:
   m_GameObject: {fileID: 1124278441}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6345,7 +6359,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 2,3
 --- !u!135 &1124278446
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7997,7 +8011,7 @@ Transform:
   m_GameObject: {fileID: 1480734866}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8070,7 +8084,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 2,0
 --- !u!135 &1480734871
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8646,7 +8660,7 @@ Transform:
   m_GameObject: {fileID: 1540315873}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928569, y: 3, z: 0.8928569}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8719,7 +8733,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 0,1
 --- !u!135 &1540315878
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8770,7 +8784,7 @@ Transform:
   m_GameObject: {fileID: 1609161540}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.89285684, y: 3, z: 0.89285684}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8843,7 +8857,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 0,0
 --- !u!135 &1609161545
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -9209,7 +9223,7 @@ Transform:
   m_GameObject: {fileID: 1655954873}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.892857, y: 3, z: 0.892857}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9282,7 +9296,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 0,3
 --- !u!135 &1655954878
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10142,7 +10156,7 @@ Transform:
   m_GameObject: {fileID: 1832635465}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10215,7 +10229,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 3,2
 --- !u!135 &1832635470
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10371,7 +10385,7 @@ Transform:
   m_GameObject: {fileID: 1864686499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10444,7 +10458,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 1,2
 --- !u!135 &1864686504
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11551,7 +11565,7 @@ Transform:
   m_GameObject: {fileID: 2054512749}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 11, z: 0}
+  m_LocalPosition: {x: 0, y: 15, z: 0}
   m_LocalScale: {x: 0.8928568, y: 3, z: 0.8928568}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11624,7 +11638,7 @@ MonoBehaviour:
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
   prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
   prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
-  player: 0
+  sphereIdentifier: 3,1
 --- !u!135 &2054512754
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -9,12 +9,15 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     public Material hoveredMatPlayer2;
     public GameObject prefabToSpawnPlayer1;
     public GameObject prefabToSpawnPlayer2;
-    // false = player1 turn, true = player2 turn
-    public bool player;
+    
+    public string sphereIdentifier;
 
     private bool isHovered = false;
     private Material currentMaterial;
     private Renderer rend;
+
+    // TODO: remove this
+    private bool player = false;
 
     // Start is called before the first frame update
     void Start()
@@ -65,10 +68,29 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
         if (player)
         {
             Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
+
+            // Call callback function in Spielfeld to handle the new sphere
+            Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+            if(spielfeld != null)
+            {
+                if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                {
+                    Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                }
+            }
         }
         else
         {
-            Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+            // Call callback function in Spielfeld to handle the new sphere
+            
+            Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+            if (spielfeld != null)
+            {
+                if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                {
+                    Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                }
+            }
         }
         
     }
