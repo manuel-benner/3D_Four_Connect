@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Spielfeld.unity.meta
 guid: 297e3793623441d4a9c0fb164b4c7f1b
+========
+guid: c289e2bb051677747b2cb4c647e4a7af
+>>>>>>>> feature/hauptmenu:Assets/Scenes/Menu.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
