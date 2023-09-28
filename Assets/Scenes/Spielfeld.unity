@@ -160,6 +160,104 @@ Transform:
   - {fileID: 1832635466}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &16358817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 16358820}
+  - component: {fileID: 16358819}
+  - component: {fileID: 16358818}
+  m_Layer: 0
+  m_Name: NetworkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &16358818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16358817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ProtocolType: 0
+  m_MaxPacketQueueSize: 128
+  m_MaxPayloadSize: 6144
+  m_HeartbeatTimeoutMS: 500
+  m_ConnectTimeoutMS: 1000
+  m_MaxConnectAttempts: 60
+  m_DisconnectTimeoutMS: 30000
+  ConnectionData:
+    Address: 127.0.0.1
+    Port: 7777
+    ServerListenAddress: 127.0.0.1
+  DebugSimulator:
+    PacketDelayMS: 0
+    PacketJitterMS: 0
+    PacketDropRate: 0
+--- !u!114 &16358819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16358817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 593a2fe42fa9d37498c96f9a383b6521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkConfig:
+    ProtocolVersion: 0
+    NetworkTransport: {fileID: 16358818}
+    PlayerPrefab: {fileID: 0}
+    Prefabs:
+      NetworkPrefabsLists:
+      - {fileID: 11400000, guid: b55ed51de64aaf247aed07455767fc71, type: 2}
+    TickRate: 30
+    ClientConnectionBufferTimeout: 10
+    ConnectionApproval: 0
+    ConnectionData: 
+    EnableTimeResync: 0
+    TimeResyncInterval: 30
+    EnsureNetworkVariableLengthSafety: 0
+    EnableSceneManagement: 1
+    ForceSamePrefabs: 1
+    RecycleNetworkIds: 1
+    NetworkIdRecycleDelay: 120
+    RpcHashSize: 0
+    LoadSceneTimeOut: 120
+    SpawnTimeout: 1
+    EnableNetworkLogs: 1
+    OldPrefabList: []
+  RunInBackground: 1
+  LogLevel: 0
+--- !u!4 &16358820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16358817}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1151883283}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &27849543
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,11 +460,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 0,3
 --- !u!135 &38276243
 SphereCollider:
@@ -914,6 +1011,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115040160}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &116157341
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 116157344}
+  - component: {fileID: 116157343}
+  - component: {fileID: 116157342}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &116157342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116157341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4266784502
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 1
+  AutoObjectParentSync: 1
+--- !u!114 &116157343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116157341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5621f06278e0942a2f0c7665deb3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kugelBlauPrefab: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
+  kugelRotPrefab: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
+--- !u!4 &116157344
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116157341}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &125789790
 GameObject:
   m_ObjectHideFlags: 0
@@ -1326,11 +1490,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 1,2
 --- !u!135 &157634052
 SphereCollider:
@@ -1665,11 +1828,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 0,1
 --- !u!135 &181143288
 SphereCollider:
@@ -2493,11 +2655,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 2,0
 --- !u!135 &318733309
 SphereCollider:
@@ -3074,11 +3235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 3,3
 --- !u!135 &447511354
 SphereCollider:
@@ -3909,11 +4069,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 1,1
 --- !u!135 &702920933
 SphereCollider:
@@ -4768,11 +4927,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 3,1
 --- !u!135 &897099915
 SphereCollider:
@@ -5386,11 +5544,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 2,2
 --- !u!135 &982487331
 SphereCollider:
@@ -6356,11 +6513,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 3,2
 --- !u!135 &1124278446
 SphereCollider:
@@ -6488,6 +6644,112 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1139098957}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1146210250
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9781476
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.20791169
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 787095074358541203, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: GlobalObjectIdHash
+      value: 842669074
+      objectReference: {fileID: 0}
+    - target: {fileID: 8528470264359731385, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+      propertyPath: m_Name
+      value: PlayerCam
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 0}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d01e5d359ae286446a1ec89cdfccba35, type: 3}
+--- !u!1 &1151883282
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1151883283}
+  - component: {fileID: 1151883284}
+  m_Layer: 0
+  m_Name: NetworkCL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1151883283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151883282}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 16358820}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1151883284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151883282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f40f37225187fd43ba96683bfc83626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1170198150
 GameObject:
   m_ObjectHideFlags: 0
@@ -8081,11 +8343,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 0,2
 --- !u!135 &1480734871
 SphereCollider:
@@ -8730,11 +8991,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 1,0
 --- !u!135 &1540315878
 SphereCollider:
@@ -8854,11 +9114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 0,0
 --- !u!135 &1609161545
 SphereCollider:
@@ -9091,111 +9350,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1638455417}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1652804068
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1652804071}
-  - component: {fileID: 1652804070}
-  - component: {fileID: 1652804069}
-  - component: {fileID: 1652804072}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!81 &1652804069
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652804068}
-  m_Enabled: 1
---- !u!20 &1652804070
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652804068}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1652804071
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652804068}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.20791169, y: 0, z: 0, w: 0.9781476}
-  m_LocalPosition: {x: 0, y: 60, z: -90}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 24, y: 0, z: 0}
---- !u!114 &1652804072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652804068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 304173eb94aecd64bbe137bf52e2482d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1655954873
 GameObject:
   m_ObjectHideFlags: 0
@@ -9293,11 +9447,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 3,0
 --- !u!135 &1655954878
 SphereCollider:
@@ -10226,11 +10379,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 2,3
 --- !u!135 &1832635470
 SphereCollider:
@@ -10455,11 +10607,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 2,1
 --- !u!135 &1864686504
 SphereCollider:
@@ -11635,11 +11786,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
-  prefabToSpawnPlayer1: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
-  prefabToSpawnPlayer2: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
   sphereIdentifier: 1,3
 --- !u!135 &2054512754
 SphereCollider:
@@ -11981,7 +12131,7 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1652804071}
+  - {fileID: 1146210250}
   - {fileID: 1459011079}
   - {fileID: 158057180}
   - {fileID: 531574353}
@@ -12001,3 +12151,5 @@ SceneRoots:
   - {fileID: 10202605}
   - {fileID: 2052772342}
   - {fileID: 899112710}
+  - {fileID: 116157344}
+  - {fileID: 16358820}

@@ -9,8 +9,6 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     public Material unhoveredMat;
     public Material hoveredMatPlayer1;
     public Material hoveredMatPlayer2;
-    public GameObject prefabToSpawnPlayer1;
-    public GameObject prefabToSpawnPlayer2;
 
     public string sphereIdentifier;
 
@@ -35,7 +33,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
+        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
             if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
@@ -59,7 +57,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
+        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
             if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
@@ -70,7 +68,6 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                     if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                     {
                         gameManager.SpawnBall(transform.position);
-                        Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
                         currentMaterial = new Material(hoveredMatPlayer2);
                         rend.material = currentMaterial;
                     }
@@ -85,7 +82,6 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                     if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                     {
                         gameManager.SpawnBall(transform.position);
-                        Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
                         currentMaterial = new Material(hoveredMatPlayer1);
                         rend.material = currentMaterial;
                     }

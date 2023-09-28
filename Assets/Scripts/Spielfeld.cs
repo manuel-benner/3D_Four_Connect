@@ -9,7 +9,7 @@ public class Spielfeld : MonoBehaviour
     public delegate bool onSphereSpawn(string sphereIdentifier);
     public static event onSphereSpawn SphereSpawned;
     public static Spielfeld Instance;
-    public enum status
+    public enum Status
     {
         myTurn,
         opponentTurn,
@@ -17,7 +17,7 @@ public class Spielfeld : MonoBehaviour
     }
 
     // Initialize by network
-    public status myStatus;
+    public Status myStatus;
 
     private int[,,] threeDMatrix;
     public int turnNumber;
@@ -28,7 +28,7 @@ public class Spielfeld : MonoBehaviour
         playerTurn = true;
         threeDMatrix = create3dMatrix();
         // Initialize by network
-        myStatus = status.myTurn;
+        myStatus = Status.myTurn;
     }
 
     // Add event
@@ -65,7 +65,7 @@ public class Spielfeld : MonoBehaviour
                     {
                         threeDMatrix[x, y, i] = turnNumber;
                         turnNumber++;
-                        myStatus = status.opponentTurn;
+                        myStatus = Status.opponentTurn;
                         if (gameOverByWin())
                         {
 

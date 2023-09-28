@@ -19,15 +19,19 @@ public class GameManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     private void SpawnBallServerRpc(Vector3 position, ServerRpcParams serverRpcParams)
     {
-        GameObject spawnedKugelObject = Instantiate(kugelBlauPrefab, position, Quaternion.identity);
+        ulong clientId = serverRpcParams.Receive.SenderClientId;
+
+        GameObject prefab = clientId == 1 ? kugelRotPrefab: kugelBlauPrefab;
+
+        GameObject spawnedKugelObject = Instantiate(prefab, position, Quaternion.identity);
         spawnedKugelObject.GetComponent<NetworkObject>().Spawn(true);
-        Debug.Log("Spielstein gespawnt für Spieler Nr. " + serverRpcParams.Receive.SenderClientId + ".");
+        Debug.Log("Spielstein gespawnt für Spieler Nr. " + clientId + ".");
     }
 
-    [ClientRpc]
+/*    [ClientRpc]
     private void SendSpawnToClientRpc()
     {
 
-    }
+    }*/
 
 }
