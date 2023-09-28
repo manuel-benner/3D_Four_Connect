@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KugelAuswahlFarbeAendern : MonoBehaviour
 {
+    public GameManager gameManager;
+
     public Material unhoveredMat;
     public Material hoveredMatPlayer1;
     public Material hoveredMatPlayer2;
@@ -64,11 +66,11 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     {
         if (player)
         {
-            Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
+            gameManager.SpawnBall(transform.position);
         }
         else
         {
-            Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+            gameManager.SpawnBall(transform.position);
         }
         
     }

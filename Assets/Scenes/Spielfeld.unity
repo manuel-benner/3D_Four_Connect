@@ -169,6 +169,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 10676335}
+  - component: {fileID: 10676337}
+  - component: {fileID: 10676336}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -191,6 +193,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &10676336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10676334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2375480510
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+--- !u!114 &10676337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10676334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5621f06278e0942a2f0c7665deb3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  kugelBlauPrefab: {fileID: 5665376603517617987, guid: 846cfe2f8fc73974c9664994cdabf45e, type: 3}
+  kugelRotPrefab: {fileID: 8794309144148919873, guid: 27548e344b1ef5c4d91de262b3f63fb5, type: 3}
 --- !u!1 &27849543
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -1357,6 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -1696,6 +1734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 10676337}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -2568,6 +2607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -3149,6 +3189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -3968,6 +4009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -4986,6 +5028,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -5604,6 +5647,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -6574,6 +6618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -8299,6 +8344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -8948,6 +8994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -9072,6 +9119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -9406,6 +9454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -10339,6 +10388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -10568,6 +10618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
@@ -11748,6 +11799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2deaa07e362db2f4899061f4fb563dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   unhoveredMat: {fileID: 2100000, guid: d191e427f4940184dac1d720a5fc7ea6, type: 2}
   hoveredMatPlayer1: {fileID: 2100000, guid: 179e7b04931d0fc478314b2d9945b0f5, type: 2}
   hoveredMatPlayer2: {fileID: 2100000, guid: 22c519eb543404a43a0b698d9bdab1c1, type: 2}
