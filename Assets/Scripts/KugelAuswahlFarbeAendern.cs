@@ -11,10 +11,9 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     public Material hoveredMatPlayer2;
     public GameObject prefabToSpawnPlayer1;
     public GameObject prefabToSpawnPlayer2;
-    // false = player1 turn, true = player2 turn
-    public bool player;
 
-    private bool isHovered = false;
+    public string sphereIdentifier;
+
     private Material currentMaterial;
     private Renderer rend;
 
@@ -36,10 +35,9 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (!isHovered)
+        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
         {
-            isHovered = true;
-            if (player)
+            if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
                 currentMaterial = new Material(hoveredMatPlayer1);
             }
@@ -54,24 +52,45 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap back to transparent material if not being hovered
     private void OnMouseExit()
     {
-        if (isHovered)
-        {
-            isHovered = false;
-            currentMaterial = new Material(unhoveredMat);
-            rend.material = currentMaterial;
-        }
+        currentMaterial = new Material(unhoveredMat);
+        rend.material = currentMaterial;
+
     }
 
     private void OnMouseDown()
     {
-        if (player)
+        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
         {
-            gameManager.SpawnBall(transform.position);
+            if (Spielfeld.Instance.turnNumber % 2 == 0)
+            {
+                // Call callback function in Spielfeld to handle the new sphere
+                Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+                if (spielfeld != null)
+                {
+                    if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                    {
+                        gameManager.SpawnBall(transform.position);
+                        Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
+                        currentMaterial = new Material(hoveredMatPlayer2);
+                        rend.material = currentMaterial;
+                    }
+                }
+            }
+            else
+            {
+                // Call callback function in Spielfeld to handle the new sphere
+                Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+                if (spielfeld != null)
+                {
+                    if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                    {
+                        gameManager.SpawnBall(transform.position);
+                        Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                        currentMaterial = new Material(hoveredMatPlayer1);
+                        rend.material = currentMaterial;
+                    }
+                }
+            }
         }
-        else
-        {
-            gameManager.SpawnBall(transform.position);
-        }
-        
     }
 }
