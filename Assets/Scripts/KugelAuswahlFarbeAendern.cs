@@ -76,6 +76,8 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                 if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                 {
                     Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
+                    currentMaterial = new Material(hoveredMatPlayer2);
+                    rend.material = currentMaterial;
                 }
             }
         }
@@ -89,6 +91,8 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                 if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                 {
                     Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                    currentMaterial = new Material(hoveredMatPlayer1);
+                    rend.material= currentMaterial;
                 }
             }
         }
