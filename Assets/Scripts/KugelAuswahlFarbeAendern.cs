@@ -15,6 +15,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     private bool isHovered = false;
     private Material currentMaterial;
     private Renderer rend;
+    private int turnNumber;
 
     // TODO: remove this
     private bool player = false;
@@ -26,6 +27,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
         rend = GetComponent<Renderer>();
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;
+        turnNumber = 0;
     }
 
     // Update is called once per frame
@@ -37,10 +39,10 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (!isHovered)
+        if (true)
         {
             isHovered = true;
-            if (player)
+            if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
                 currentMaterial = new Material(hoveredMatPlayer1);
             }
@@ -55,7 +57,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap back to transparent material if not being hovered
     private void OnMouseExit()
     {
-        if (isHovered)
+        if (true)
         {
             isHovered = false;
             currentMaterial = new Material(unhoveredMat);
@@ -65,17 +67,15 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (player)
+        if (Spielfeld.Instance.turnNumber % 2 == 0)
         {
-            Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
-
             // Call callback function in Spielfeld to handle the new sphere
             Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
             if(spielfeld != null)
             {
                 if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                 {
-                    Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                    Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
                 }
             }
         }
