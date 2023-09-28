@@ -3,14 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Unity.Netcode;
 
 public class MenuController : MonoBehaviour
 {
     public string levelString;
 
-    public void StartBtn()
+    private readonly NetworkManager networkManager = NetworkManager.Singleton;
+
+    public void StartGame()
     {
-        SceneManager.LoadScene(levelString);
+        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        {
+            Debug.Log("Loading Scene: " + levelString);
+            NetworkManager.Singleton.SceneManager.LoadScene(levelString, LoadSceneMode.Single);
+        }
+        else
+        {
+            Debug.Log("Error: Must be Server or Host to load a scene.");
+        }
+    }
+
+    public void HostBtn()
+    {
+        NetworkManager.Singleton.StartHost();
+        StartGame();
+    }
+
+    public void JoinBtn()
+    {
+        NetworkManager.Singleton.StartClient();
     }
 
     public void ExitBtn()
