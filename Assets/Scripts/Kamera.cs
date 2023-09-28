@@ -17,18 +17,24 @@ public class Kamera : MonoBehaviour
         // V -> Kamera zum Betrachter hin
         if (Input.GetKey(KeyCode.C))
         {
-            transform.Translate(0, -0.1f, 0.4f);
-            var currEulerAngles = transform.eulerAngles;
-            currEulerAngles.x -= 0.08f;
-            transform.rotation = Quaternion.Euler(currEulerAngles);
+            if(!(transform.position.y < 33))
+            {
+                transform.Translate(0, -0.1f, 0.4f);
+                var currEulerAngles = transform.eulerAngles;
+                currEulerAngles.x -= 0.08f;
+                transform.rotation = Quaternion.Euler(currEulerAngles);
+            }
         }
         
         else if (Input.GetKey(KeyCode.V))
         {
-            transform.Translate(0, 0.1f, -0.4f);
-            var currEulerAngles = transform.eulerAngles;
-            currEulerAngles.x += 0.08f;
-            transform.rotation = Quaternion.Euler(currEulerAngles);
+            if(!(transform.position.y > 200))
+            {
+                transform.Translate(0, 0.1f, -0.4f);
+                var currEulerAngles = transform.eulerAngles;
+                currEulerAngles.x += 0.08f;
+                transform.rotation = Quaternion.Euler(currEulerAngles);
+            }            
         }
         
 

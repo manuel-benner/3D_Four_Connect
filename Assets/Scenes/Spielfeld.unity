@@ -3458,6 +3458,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTurn: 0
+  myStatus: 0
   turnNumber: 0
 --- !u!1 &586551754
 GameObject:
@@ -9177,7 +9178,7 @@ Transform:
   m_GameObject: {fileID: 1652804068}
   serializedVersion: 2
   m_LocalRotation: {x: 0.20791169, y: 0, z: 0, w: 0.9781476}
-  m_LocalPosition: {x: 0, y: 40, z: -60}
+  m_LocalPosition: {x: 0, y: 60, z: -90}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

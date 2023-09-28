@@ -12,13 +12,8 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     
     public string sphereIdentifier;
 
-    private bool isHovered = false;
     private Material currentMaterial;
     private Renderer rend;
-    private int turnNumber;
-
-    // TODO: remove this
-    private bool player = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +22,6 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
         rend = GetComponent<Renderer>();
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;
-        turnNumber = 0;
     }
 
     // Update is called once per frame
@@ -39,9 +33,8 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (true)
+        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
         {
-            isHovered = true;
             if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
                 currentMaterial = new Material(hoveredMatPlayer1);
@@ -57,45 +50,43 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap back to transparent material if not being hovered
     private void OnMouseExit()
     {
-        if (true)
-        {
-            isHovered = false;
-            currentMaterial = new Material(unhoveredMat);
-            rend.material = currentMaterial;
-        }
+        currentMaterial = new Material(unhoveredMat);
+        rend.material = currentMaterial;
+        
     }
 
     private void OnMouseDown()
     {
-        if (Spielfeld.Instance.turnNumber % 2 == 0)
+        if (Spielfeld.Instance.myStatus == Spielfeld.status.myTurn)
         {
-            // Call callback function in Spielfeld to handle the new sphere
-            Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
-            if(spielfeld != null)
+            if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
-                if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                // Call callback function in Spielfeld to handle the new sphere
+                Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+                if (spielfeld != null)
                 {
-                    Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
-                    currentMaterial = new Material(hoveredMatPlayer2);
-                    rend.material = currentMaterial;
+                    if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                    {
+                        Instantiate(prefabToSpawnPlayer1, transform.position, Quaternion.identity);
+                        currentMaterial = new Material(hoveredMatPlayer2);
+                        rend.material = currentMaterial;
+                    }
+                }
+            }
+            else
+            {
+                // Call callback function in Spielfeld to handle the new sphere
+                Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
+                if (spielfeld != null)
+                {
+                    if (spielfeld.HandleSphereSpawn(sphereIdentifier))
+                    {
+                        Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
+                        currentMaterial = new Material(hoveredMatPlayer1);
+                        rend.material = currentMaterial;
+                    }
                 }
             }
         }
-        else
-        {
-            // Call callback function in Spielfeld to handle the new sphere
-            
-            Spielfeld spielfeld = FindObjectOfType<Spielfeld>();
-            if (spielfeld != null)
-            {
-                if (spielfeld.HandleSphereSpawn(sphereIdentifier))
-                {
-                    Instantiate(prefabToSpawnPlayer2, transform.position, Quaternion.identity);
-                    currentMaterial = new Material(hoveredMatPlayer1);
-                    rend.material= currentMaterial;
-                }
-            }
-        }
-        
     }
 }

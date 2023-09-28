@@ -1,13 +1,13 @@
 Bausteine:
   Szene
     - Ui Element wer dran ist
-    - Kameraführung (Input controls)
-      - Transparente bälle für auswahl
-    - Board
-      - Backendklasse mit 3d matrix
-        - Gewinncheck
-        - interne Matrix wird anhand von der zugnummer hochgezählt ... dann modulo 2 
-    - Spielsteine
+    - Kameraführung (Input controls)								OK
+      - Transparente bälle für auswahl								OK
+    - Board											OK
+      - Backendklasse mit 3d matrix								OK
+        - Gewinncheck										OK
+        - interne Matrix wird anhand von der zugnummer hochgezählt ... dann modulo 2 		OK
+    - Spielsteine										OK
   Netzwerk (Netzwerktest mit lokalem Netzwerk)
     - Übergabe von:
       - Board + Spielsteine => NetworkTransform Komponente
