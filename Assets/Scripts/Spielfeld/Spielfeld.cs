@@ -27,8 +27,6 @@ public class Spielfeld : MonoBehaviour
     {
         playerTurn = true;
         threeDMatrix = create3dMatrix();
-        // Initialize by network
-        myStatus = Status.myTurn;
     }
 
     // Add event
@@ -65,7 +63,7 @@ public class Spielfeld : MonoBehaviour
                     {
                         threeDMatrix[x, y, i] = turnNumber;
                         turnNumber++;
-                        myStatus = Status.opponentTurn;
+                        
                         if (gameOverByWin())
                         {
 
