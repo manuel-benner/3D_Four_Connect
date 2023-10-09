@@ -8,16 +8,28 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private GameObject kugelBlauPrefab;
     [SerializeField] private GameObject kugelRotPrefab;
 
-    public void SpawnBall(Vector3 position)
+    public override void OnNetworkSpawn()
+    {
+        if (!NetworkManager.Singleton.IsServer)
+        {
+            Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
+            Debug.Log(Spielfeld.Instance.myStatus);
+            return;
+        }
+        Debug.Log(Spielfeld.Instance.myStatus);
+        Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
+    }
+
+    public void SpawnBall(Vector3 position, string stringIdentifier)
     {
         if(IsClient)
         {
-            SpawnBallServerRpc(position, new ServerRpcParams());
+            SpawnBallServerRpc(position, stringIdentifier, new ServerRpcParams());
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnBallServerRpc(Vector3 position, ServerRpcParams serverRpcParams)
+    private void SpawnBallServerRpc(Vector3 position, string stringIdentifier, ServerRpcParams serverRpcParams)
     {
         ulong clientId = serverRpcParams.Receive.SenderClientId;
 
@@ -25,13 +37,23 @@ public class GameManager : NetworkBehaviour
 
         GameObject spawnedKugelObject = Instantiate(prefab, position, Quaternion.identity);
         spawnedKugelObject.GetComponent<NetworkObject>().Spawn(true);
+        SendSpawnToClientRpc(stringIdentifier);
         Debug.Log("Spielstein gespawnt für Spieler Nr. " + clientId + ".");
     }
 
-/*    [ClientRpc]
-    private void SendSpawnToClientRpc()
+    [ClientRpc]
+    private void SendSpawnToClientRpc(string stringIdentifier)
     {
-
-    }*/
+        if(Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
+        {
+            Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
+        }
+        else if(Spielfeld.Instance.myStatus == Spielfeld.Status.opponentTurn)
+        {
+            Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
+            Spielfeld.Instance.HandleSphereSpawn(stringIdentifier);
+        }
+        Debug.Log(Spielfeld.Instance.myStatus);
+    }
 
 }

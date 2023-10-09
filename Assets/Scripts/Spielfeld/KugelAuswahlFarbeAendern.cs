@@ -67,7 +67,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                 {
                     if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                     {
-                        gameManager.SpawnBall(transform.position);
+                        gameManager.SpawnBall(transform.position, sphereIdentifier);
                         currentMaterial = new Material(hoveredMatPlayer2);
                         rend.material = currentMaterial;
                     }
@@ -81,7 +81,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
                 {
                     if (spielfeld.HandleSphereSpawn(sphereIdentifier))
                     {
-                        gameManager.SpawnBall(transform.position);
+                        gameManager.SpawnBall(transform.position, sphereIdentifier);
                         currentMaterial = new Material(hoveredMatPlayer1);
                         rend.material = currentMaterial;
                     }
