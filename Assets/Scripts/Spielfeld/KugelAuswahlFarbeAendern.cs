@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class KugelAuswahlFarbeAendern : MonoBehaviour
@@ -35,13 +36,13 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     {
         if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
-            if (Spielfeld.Instance.turnNumber % 2 == 0)
+            if (NetworkManager.Singleton.IsServer)
             {
-                currentMaterial = new Material(hoveredMatPlayer1);
+                currentMaterial = new Material(hoveredMatPlayer2);
             }
             else
             {
-                currentMaterial = new Material(hoveredMatPlayer2);
+                currentMaterial = new Material(hoveredMatPlayer1);
             }
             rend.material = currentMaterial;
         }
