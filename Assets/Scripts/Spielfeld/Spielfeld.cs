@@ -13,7 +13,8 @@ public class Spielfeld : MonoBehaviour
     {
         myTurn,
         opponentTurn,
-        gameOver
+        gameOverWin,
+        gameOverDraw
     }
 
     // Initialize by network
@@ -66,11 +67,13 @@ public class Spielfeld : MonoBehaviour
                         
                         if (gameOverByWin())
                         {
-
+                            Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;
+                            Debug.Log("Game over by win");
                         }
                         else if (gameOverByDraw())
                         {
-
+                            Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverDraw;
+                            Debug.Log("Game over by draw");
                         }
                         return true;
                     }

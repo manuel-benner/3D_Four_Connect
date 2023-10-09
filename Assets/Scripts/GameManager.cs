@@ -20,16 +20,16 @@ public class GameManager : NetworkBehaviour
         Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
     }
 
-    public void SpawnBall(Vector3 position)
+    public void SpawnBall(Vector3 position, string stringIdentifier)
     {
         if(IsClient)
         {
-            SpawnBallServerRpc(position, new ServerRpcParams());
+            SpawnBallServerRpc(position, stringIdentifier, new ServerRpcParams());
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SpawnBallServerRpc(Vector3 position, ServerRpcParams serverRpcParams)
+    private void SpawnBallServerRpc(Vector3 position, string stringIdentifier, ServerRpcParams serverRpcParams)
     {
         ulong clientId = serverRpcParams.Receive.SenderClientId;
 
@@ -37,31 +37,23 @@ public class GameManager : NetworkBehaviour
 
         GameObject spawnedKugelObject = Instantiate(prefab, position, Quaternion.identity);
         spawnedKugelObject.GetComponent<NetworkObject>().Spawn(true);
-        SendSpawnToClientRpc();
+        SendSpawnToClientRpc(stringIdentifier);
         Debug.Log("Spielstein gespawnt für Spieler Nr. " + clientId + ".");
     }
 
     [ClientRpc]
-    private void SendSpawnToClientRpc()
+    private void SendSpawnToClientRpc(string stringIdentifier)
     {
         if(Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
-            oppTurnNext();
+            Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
         }
         else if(Spielfeld.Instance.myStatus == Spielfeld.Status.opponentTurn)
         {
-            myTurnNext();
+            Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
+            Spielfeld.Instance.HandleSphereSpawn(stringIdentifier);
         }
         Debug.Log(Spielfeld.Instance.myStatus);
     }
 
-    private void myTurnNext()
-    {
-        Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
-    }
-
-    private void oppTurnNext()
-    {
-        Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
-    }
 }
