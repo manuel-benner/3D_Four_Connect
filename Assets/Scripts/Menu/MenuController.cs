@@ -4,11 +4,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
-using System;
-using System.Net;
-using TMPro;
-using System.Linq;
 
 public class MenuController : MonoBehaviour
 {
