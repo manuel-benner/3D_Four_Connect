@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Unity.Netcode;
+using System;
+using Unity.Netcode.Transports.UTP;
+using System.Net;
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
@@ -33,33 +37,38 @@ public class MenuController : MonoBehaviour
 
     public void JoinBtn(GameObject InvalidIpScreen)
     {
-        GameObject inputObj = getGameobj("InputUI", "IpToJoin");
-        string ipAdress = inputObj.GetComponent<TextMeshProUGUI>().text;
-        if (SetJoinAdress(ipAdress))
-        {
-            try
-            {
-                NetworkManager.Singleton.StartClient();
-            }
-            catch
-            {
-                Debug.Log("Error: Invalid Ip inserted cannot join a game");
-                InvalidIpScreen.gameObject.SetActive(true);
-                //TODO: reset NetworkManager
-            }
 
+        try
+        {
+            NetworkManager.Singleton.StartClient();
         }
-        Debug.Log("Error: Invalid Ip inserted cannot join a game");
-        InvalidIpScreen.gameObject.SetActive(true);
+        catch
+        {
+            Debug.Log("Error: Invalid Ip inserted cannot join a game");
+            InvalidIpScreen.gameObject.SetActive(true);
+            //TODO: reset NetworkManager
+        }
+
     }
 
     public void ResetTextMeshObj(GameObject toReset)
     {
-        if (toReset.gameObject.TryGetComponent<TextMeshPro>(out TextMeshPro textToReset))
+        if (toReset.gameObject.TryGetComponent<TMP_InputField>(out TMP_InputField textToReset))
         {
             textToReset.text = "";
         }
         Debug.Log("called reset TextMesh method on a object without Textmesh: " + textToReset.name);
+    }
+
+    public void SetAdress(GameObject InvalidIpScreen)
+    {
+        GameObject inputObj = getGameobj("InputUI", "IpToJoin");
+        string ipAdress = inputObj.GetComponent<TMP_InputField>().text;
+        if (! SetJoinAdress(ipAdress))
+        {
+            Debug.Log("Error: Invalid Ip inserted cannot join a game");
+            InvalidIpScreen.gameObject.SetActive(true);
+        }
     }
 
 
@@ -74,6 +83,12 @@ public class MenuController : MonoBehaviour
     }
 
     #endregion
+
+
+    public void StartHotseat()
+    {
+        Debug.Log("Starting Hotseat game");
+    }
 
     public void ExitBtn()
     {

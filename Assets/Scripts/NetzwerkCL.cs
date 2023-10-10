@@ -6,7 +6,7 @@ public class NetzwerkCL : MonoBehaviour
 {
     private NetworkManager netManager;
 
-    void Start()
+    public void StartNetwork()
     {
         netManager = GetComponentInParent<NetworkManager>();
 

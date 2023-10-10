@@ -8,6 +8,7 @@ TagManager:
   - KugelAuswahl
   - PopupUI
   - InputUI
+  - GespawnteKugel
   layers:
   - Default
   - TransparentFX
