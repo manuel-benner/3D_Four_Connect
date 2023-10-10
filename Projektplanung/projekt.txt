@@ -10,9 +10,9 @@ Bausteine:
     - Spielsteine										OK
   Netzwerk (Netzwerktest mit lokalem Netzwerk)
     - Übergabe von:
-      - Board + Spielsteine => NetworkTransform Komponente
-      - Zugstatus (= Wer ist dran?) Von Automat => Automat
-      - Spielstatus: Laufend/Zuende
+      - Board + Spielsteine => NetworkTransform Komponente					OK
+      - Zugstatus (= Wer ist dran?) Von Automat => Automat					OK
+      - Spielstatus: Laufend/Zuende								OK
   Hauptmenü (Hotseat oder Netzwerk spiel, eingabe und farbauswahl) 
     - Neues Spiel (aufruf von Konstrukoren)
     - Random Funktion wer anfängt
@@ -22,5 +22,5 @@ Bausteine:
 
   Addon:
     - Replay einfach matrix serialisieren 
-    - Animation beim setzen (aufleuchten oder so)
+    - Animation beim setzen (aufleuchten oder so)						OK
 
