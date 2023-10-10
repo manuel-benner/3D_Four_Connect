@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Rohr
   - KugelAuswahl
+  - PopupUI
+  - InputUI
   layers:
   - Default
   - TransparentFX
