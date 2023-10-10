@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Spielfeld : MonoBehaviour
 {
-    public bool playerTurn;
-
     public delegate bool onSphereSpawn(string sphereIdentifier);
     public static event onSphereSpawn SphereSpawned;
     public static Spielfeld Instance;
@@ -14,7 +13,8 @@ public class Spielfeld : MonoBehaviour
         myTurn,
         opponentTurn,
         gameOverWin,
-        gameOverDraw
+        gameOverDraw,
+        newGame
     }
 
     // Initialize by network
@@ -26,7 +26,6 @@ public class Spielfeld : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerTurn = true;
         threeDMatrix = create3dMatrix();
     }
 
@@ -94,7 +93,29 @@ public class Spielfeld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Spielfeld.Instance.myStatus == Spielfeld.Status.newGame)
+        {
+            resetPlayfield();
+        }
+    }
 
+    private void resetPlayfield()
+    {
+        threeDMatrix = create3dMatrix();
+        turnNumber = 0;
+        GameObject[] spawnedSpheres = GameObject.FindGameObjectsWithTag("GespawnteKugel");
+        foreach (GameObject sphere in spawnedSpheres)
+        {
+            Destroy(sphere);
+        }
+        if (NetworkManager.Singleton.IsServer)
+        {
+            Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
+        }
+        else
+        {
+            Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
+        }
     }
 
     private bool gameOverByWin()

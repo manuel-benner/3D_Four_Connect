@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Rohr
   - KugelAuswahl
+  - GespawnteKugel
   layers:
   - Default
   - TransparentFX
