@@ -9,11 +9,12 @@ using Unity.Netcode.Transports.UTP;
 using System.Net;
 using TMPro;
 
-public class MenuController : MonoBehaviour
+public class MenuController : NetworkBehaviour
 {
     public string levelString;
 
     #region Local Network
+
 
     public void StartGame()
     {
@@ -38,26 +39,20 @@ public class MenuController : MonoBehaviour
     public void JoinBtn(GameObject InvalidIpScreen)
     {
 
+        //if (NetworkManager.Singleton.StartClient()) Debug.Log("Client Started");
+
+        //Debug.Log("Error: Invalid Ip inserted cannot join a game");
+        //InvalidIpScreen.gameObject.SetActive(true);
+        
         try
         {
             NetworkManager.Singleton.StartClient();
         }
-        catch
+        catch (Exception ex)
         {
-            Debug.Log("Error: Invalid Ip inserted cannot join a game");
+            Debug.Log(ex);
             InvalidIpScreen.gameObject.SetActive(true);
-            //TODO: reset NetworkManager
         }
-
-    }
-
-    public void ResetTextMeshObj(GameObject toReset)
-    {
-        if (toReset.gameObject.TryGetComponent<TMP_InputField>(out TMP_InputField textToReset))
-        {
-            textToReset.text = "";
-        }
-        Debug.Log("called reset TextMesh method on a object without Textmesh: " + textToReset.name);
     }
 
     public void SetAdress(GameObject InvalidIpScreen)
@@ -75,7 +70,7 @@ public class MenuController : MonoBehaviour
     public bool SetJoinAdress(string IpAdress)
     {
         // validating Ip adress
-        if (! IPAddress.TryParse(IpAdress, out IPAddress addr)) return false;
+        if (! IPAddress.TryParse(IpAdress, out IPAddress _)) return false;
 
         //setting valid Ip
         NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = IpAdress;
@@ -84,17 +79,16 @@ public class MenuController : MonoBehaviour
 
     #endregion
 
-
     public void StartHotseat()
     {
         Debug.Log("Starting Hotseat game");
+        throw new NotImplementedException();
     }
 
     public void ExitBtn()
     {
         Application.Quit();
     }
-
 
     private GameObject getGameobj(string Tag, string Name)
     {
@@ -111,6 +105,16 @@ public class MenuController : MonoBehaviour
             throw new Exception($"Could not find the game object {Name} with the tag {Tag}");
         }
         return objToFind;
+    }
+
+    public void ResetInputField(GameObject toReset)
+    {
+        if (toReset.TryGetComponent<TMP_InputField>(out TMP_InputField textToReset))
+        {
+            textToReset.text = "";
+            return;
+        }
+        Debug.Log("called reset TextMesh method on a object without Textmesh: " + textToReset.name);
     }
 
 }

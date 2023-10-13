@@ -6,6 +6,7 @@ public class NetzwerkCL : MonoBehaviour
 {
     private NetworkManager netManager;
 
+
     public void StartNetwork()
     {
         netManager = GetComponentInParent<NetworkManager>();
@@ -29,6 +30,21 @@ public class NetzwerkCL : MonoBehaviour
                     netManager.StartClient();
                     break;
             }
+        }
+    }
+
+    public void CloseNetwork()
+    {
+        if (NetworkManager.Singleton == null) return; // the network manager was not startet yet
+
+        NetworkManager.Singleton.Shutdown();
+    }
+
+    public void CleanupNetwork()
+    {
+        if (NetworkManager.Singleton != null)
+        {
+            Destroy(NetworkManager.Singleton.gameObject);
         }
     }
 
