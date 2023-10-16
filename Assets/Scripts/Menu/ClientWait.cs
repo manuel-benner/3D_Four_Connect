@@ -11,9 +11,9 @@ public class ClientWait : MonoBehaviour
 
     [SerializeField] private float? secondsUntilTimeout;
 
-    [SerializeField] private GameObject InvalidIpScreen;
+    [SerializeField] private GameObject ErrorBox;
 
-    private wait networkEventClass;
+    private NetworkEventListener networkEventClass;
 
     // Start is called before the first frame update
     private void OnEnable()
@@ -24,14 +24,19 @@ public class ClientWait : MonoBehaviour
         {
             secondsUntilTimeout = 5f;
         }
-        if (InvalidIpScreen == null)
+        if (ErrorBox == null)
         {
             Debug.Log("InvalidIpScreen not set as class parameter");
         }
         // subscribe to onconnection event
-        networkEventClass = new wait(this);
+        networkEventClass = new NetworkEventListener(this);
         // start Client
         NetworkManager.Singleton.StartClient();
+    }
+
+    private void OnDisable()
+    {
+        networkEventClass.RemoveEvents();
     }
 
 
@@ -43,20 +48,21 @@ public class ClientWait : MonoBehaviour
 
         if(timeSinceStartOfScript > secondsUntilTimeout && ! clientconnected)
         {
-            CaseInvalidIp();
+            Error("Connection timed out");
         }
     }
 
-    private void CaseInvalidIp()
+    private void Error(string message)
     {
         NetworkManager.Singleton.Shutdown();
-        InvalidIpScreen.SetActive(true);
+        ErrorBox.GetComponent<ChangeText>().SetText(message);
+        ErrorBox.SetActive(true);
         gameObject.SetActive(false);
     }
-    public class wait : NetworkBehaviour
+    public class NetworkEventListener : NetworkBehaviour
     {
         private ClientWait clientWait;
-        public wait(ClientWait outerClass)
+        public NetworkEventListener(ClientWait outerClass)
         {
             clientWait = outerClass;
         }
@@ -66,6 +72,21 @@ public class ClientWait : MonoBehaviour
             if (IsClient)
             {
                 NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+                NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+            }
+        }
+        public void RemoveEvents()
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+        }
+
+        private void OnClientDisconnected(ulong obj)
+        {
+            Debug.Log($"Client: {obj} Disconnected");
+            if (NetworkManager.Singleton.LocalClientId == obj)
+            {
+                clientWait.Error("Got disconnected from server");
             }
         }
 

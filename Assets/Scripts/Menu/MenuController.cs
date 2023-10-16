@@ -9,20 +9,25 @@ using Unity.Netcode.Transports.UTP;
 using System.Net;
 using TMPro;
 
-public class MenuController : NetworkBehaviour
+public class MenuController : MonoBehaviour
 {
     public string levelString;
+    private NetworkManager networkManager;
 
     #region Local Network
 
+    private void Start()
+    {
+        networkManager = NetworkManager.Singleton;
+    }
 
     public void StartGame()
     {
-        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
+        if (networkManager.IsServer || networkManager.IsHost)
         {
             Debug.Log("Loading Scene: " + levelString);
             
-            NetworkManager.Singleton.SceneManager.LoadScene(levelString, LoadSceneMode.Single);
+            networkManager.SceneManager.LoadScene(levelString, LoadSceneMode.Single);
         }
         else
         {
@@ -32,21 +37,15 @@ public class MenuController : NetworkBehaviour
 
     public void HostBtn()
     {
-        NetworkManager.Singleton.StartHost();
+        networkManager.StartHost();
         StartGame();
     }
 
     public void JoinBtn(GameObject InvalidIpScreen)
-    {
-
-        //if (NetworkManager.Singleton.StartClient()) Debug.Log("Client Started");
-
-        //Debug.Log("Error: Invalid Ip inserted cannot join a game");
-        //InvalidIpScreen.gameObject.SetActive(true);
-        
+    {       
         try
         {
-            NetworkManager.Singleton.StartClient();
+            networkManager.StartClient();
         }
         catch (Exception ex)
         {
@@ -73,7 +72,7 @@ public class MenuController : NetworkBehaviour
         if (! IPAddress.TryParse(IpAdress, out IPAddress _)) return false;
 
         //setting valid Ip
-        NetworkManager.Singleton.GetComponent<UnityTransport>().ConnectionData.Address = IpAdress;
+        networkManager.GetComponent<UnityTransport>().ConnectionData.Address = IpAdress;
         return true;
     }
 

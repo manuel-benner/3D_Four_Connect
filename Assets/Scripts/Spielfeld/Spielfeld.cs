@@ -99,7 +99,7 @@ public class Spielfeld : MonoBehaviour
         }
     }
 
-    private void resetPlayfield()
+    public void resetPlayfield()
     {
         threeDMatrix = create3dMatrix();
         turnNumber = 0;
