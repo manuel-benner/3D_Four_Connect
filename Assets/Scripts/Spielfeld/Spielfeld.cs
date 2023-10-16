@@ -19,14 +19,18 @@ public class Spielfeld : MonoBehaviour
 
     // Initialize by network
     public Status myStatus;
+    public int turnNumber;
+    public bool placedSphere;
+    public int player;
 
     private int[,,] threeDMatrix;
-    public int turnNumber;
+       
 
     // Start is called before the first frame update
     void Start()
     {
         threeDMatrix = create3dMatrix();
+        placedSphere = false;
     }
 
     // Add event
@@ -51,6 +55,7 @@ public class Spielfeld : MonoBehaviour
 
     public bool HandleSphereSpawn(string sphereIdentifier)
     {
+
         string[] coords = sphereIdentifier.Split(',');
 
         if (coords.Length == 2 )
@@ -64,6 +69,8 @@ public class Spielfeld : MonoBehaviour
                         threeDMatrix[x, y, i] = turnNumber;
                         turnNumber++;
                         
+
+
                         if (gameOverByWin())
                         {
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;
@@ -74,6 +81,7 @@ public class Spielfeld : MonoBehaviour
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverDraw;
                             Debug.Log("Game over by draw");
                         }
+                        
                         return true;
                     }
                 }
@@ -88,7 +96,7 @@ public class Spielfeld : MonoBehaviour
             Debug.LogError("Invalid string, length after split not 2. input string: " + sphereIdentifier);
         }
         return false;
-}
+    }
 
     // Update is called once per frame
     void Update()
@@ -118,9 +126,9 @@ public class Spielfeld : MonoBehaviour
         }
     }
 
-    private bool gameOverByWin()
+    public bool gameOverByWin()
     {
-        if(CheckHorizontalWin((turnNumber + 1) % 2) || CheckVerticalWin((turnNumber + 1) % 2) || CheckDiagonalWin((turnNumber + 1) % 2))
+        if(CheckHorizontalWin(Spielfeld.Instance.player) || CheckVerticalWin(Spielfeld.Instance.player) || CheckDiagonalWin(Spielfeld.Instance.player))
         {
             return true;
         }
@@ -134,12 +142,15 @@ public class Spielfeld : MonoBehaviour
         {
             for (int y = 0; y < 4; y++)
             {
-                if (threeDMatrix[x, y, 0] % 2 == player &&
-                    threeDMatrix[x, y, 1] % 2 == player &&
-                    threeDMatrix[x, y, 2] % 2 == player &&
-                    threeDMatrix[x, y, 3] % 2 == player)
+                if (threeDMatrix[x,y,0] != -1)
                 {
-                    return true;
+                    int colour = threeDMatrix[x, y, 0] % 2;
+                    if (threeDMatrix[x, y, 1] % 2 == colour &&
+                        threeDMatrix[x, y, 2] % 2 == colour &&
+                        threeDMatrix[x, y, 3] % 2 == colour)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -153,12 +164,15 @@ public class Spielfeld : MonoBehaviour
         {
             for (int z = 0; z < 4; z++)
             {
-                if (threeDMatrix[x, 0, z] % 2 == player &&
-                    threeDMatrix[x, 1, z] % 2 == player &&
-                    threeDMatrix[x, 2, z] % 2 == player &&
-                    threeDMatrix[x, 3, z] % 2 == player)
+                if (threeDMatrix[x,0,z] != -1)
                 {
-                    return true;
+                    int colour = threeDMatrix[x, 0, z] % 2;
+                    if (threeDMatrix[x, 1, z] % 2 == colour &&
+                        threeDMatrix[x, 2, z] % 2 == colour &&
+                        threeDMatrix[x, 3, z] % 2 == colour)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -171,94 +185,134 @@ public class Spielfeld : MonoBehaviour
         //Check from x=0 site
         for (int x = 0; x < 4; x++)
         {
-            //From Bottom - Top
-            if ((threeDMatrix[x, 0, 0] % 2 == player) &&
-                (threeDMatrix[x, 1, 1] % 2 == player) &&
-                (threeDMatrix[x, 2, 2] % 2 == player) &&
-                (threeDMatrix[x, 3, 3] % 2 == player))
+            if (threeDMatrix[x, 0, 0] != -1)
             {
-                return true;
+                int colour = threeDMatrix[x, 0, 0] % 2;
+                //From Bottom - Top
+                if (threeDMatrix[x, 1, 1] % 2 == colour &&
+                    threeDMatrix[x, 2, 2] % 2 == colour &&
+                    threeDMatrix[x, 3, 3] % 2 == colour)
+                {
+                    return true;
+                }
             }
-            //From Top - Bottom
-            if ((threeDMatrix[x, 0, 3] % 2 == player) &&
-                (threeDMatrix[x, 1, 2] % 2 == player) &&
-                (threeDMatrix[x, 2, 1] % 2 == player) &&
-                (threeDMatrix[x, 3, 0] % 2 == player))
+
+            if (threeDMatrix[x, 0, 3] != -1)
             {
-                return true;
+                int colour = threeDMatrix[x, 0, 3] % 2;
+                //From Top - Bottom
+                if (threeDMatrix[x, 1, 2] % 2 == colour &&
+                    threeDMatrix[x, 2, 1] % 2 == colour &&
+                    threeDMatrix[x, 3, 0] % 2 == colour)
+                {
+                    return true;
+                }
             }
         }
+
         //Check from y=0 site
         for (int y = 0; y < 4; y++)
         {
-            //From Bottom - Top
-            if ((threeDMatrix[0, y, 0] % 2 == player) &&
-                (threeDMatrix[1, y, 1] % 2 == player) &&
-                (threeDMatrix[2, y, 2] % 2 == player) &&
-                (threeDMatrix[3, y, 3] % 2 == player))
+            if (threeDMatrix[0, y, 0] != -1)
+            {
+                int colour = threeDMatrix[0, y, 0] % 2;
+                //From Bottom - Top
+                if (threeDMatrix[1, y, 1] % 2 == colour &&
+                    threeDMatrix[2, y, 2] % 2 == colour &&
+                    threeDMatrix[3, y, 3] % 2 == colour)
+                {
+                    return true;
+                }
+            }
+
+            if (threeDMatrix[0, y, 3] != -1)
+            {
+                int colour = threeDMatrix[0, y, 3] % 2;
+                //From Top - Bottom
+                if (threeDMatrix[1, y, 2] % 2 == colour &&
+                    threeDMatrix[2, y, 1] % 2 == colour &&
+                    threeDMatrix[3, y, 0] % 2 == colour)
+                {
+                    return true;
+                }
+            }
+        }
+
+        if (threeDMatrix[0, 0, 0] != -1)
+        {
+            int colour = threeDMatrix[0, 0, 0] % 2;
+            //Check Corner(0,0) to Corner(3,3) 
+            if (threeDMatrix[1, 1, 1] % 2 == colour &&
+                threeDMatrix[2, 2, 2] % 2 == colour &&
+                threeDMatrix[3, 3, 3] % 2 == colour)
             {
                 return true;
             }
-            //From Top - Bottom
-            if ((threeDMatrix[0, y, 3] % 2 == player) &&
-                (threeDMatrix[1, y, 2] % 2 == player) &&
-                (threeDMatrix[2, y, 1] % 2 == player) &&
-                (threeDMatrix[3, y, 0] % 2 == player))
+        }
+
+        if (threeDMatrix[0, 0, 3] != -1)
+        {
+            int colour = threeDMatrix[0, 0, 3] % 2;
+            if (threeDMatrix[1, 1, 2] % 2 == colour &&
+                threeDMatrix[2, 2, 1] % 2 == colour &&
+                threeDMatrix[3, 3, 0] % 2 == colour)
             {
                 return true;
             }
         }
-        //Check Corner(0,0) to Corner(3,3) 
-        if ((threeDMatrix[0, 0, 0] % 2 == player) &&
-            (threeDMatrix[1, 1, 1] % 2 == player) &&
-            (threeDMatrix[2, 2, 2] % 2 == player) &&
-            (threeDMatrix[3, 3, 3] % 2 == player))
+
+        if (threeDMatrix[0, 3, 0] != -1)
         {
-            return true;
+            int colour = threeDMatrix[0, 3, 0] % 2;
+            //Check Corner(3,0) to Corner(0,3) 
+            if (threeDMatrix[1, 2, 1] % 2 == colour &&
+                threeDMatrix[2, 1, 2] % 2 == colour &&
+                threeDMatrix[3, 0, 3] % 2 == colour)
+            {
+                return true;
+            }
         }
-        if ((threeDMatrix[0, 0, 3] % 2 == player) &&
-            (threeDMatrix[1, 1, 2] % 2 == player) &&
-            (threeDMatrix[2, 2, 1] % 2 == player) &&
-            (threeDMatrix[3, 3, 0] % 2 == player))
+
+        if (threeDMatrix[0, 3, 3] != -1)
         {
-            return true;
+            int colour = threeDMatrix[0, 3, 3] % 2;
+            if (threeDMatrix[1, 2, 2] % 2 == colour &&
+                threeDMatrix[2, 1, 1] % 2 == colour &&
+                threeDMatrix[3, 0, 0] % 2 == colour)
+            {
+                return true;
+            }
         }
-        //Check Corner(3,0) to Corner(0,3) 
-        if ((threeDMatrix[0, 3, 0] % 2 == player) &&
-            (threeDMatrix[1, 2, 1] % 2 == player) &&
-            (threeDMatrix[2, 1, 2] % 2 == player) &&
-            (threeDMatrix[3, 0, 3] % 2 == player))
-        {
-            return true;
-        }
-        if ((threeDMatrix[0, 3, 3] % 2 == player) &&
-            (threeDMatrix[1, 2, 2] % 2 == player) &&
-            (threeDMatrix[2, 1, 1] % 2 == player) &&
-            (threeDMatrix[3, 0, 0] % 2 == player))
-        {
-            return true;
-        }
+
 
         //Check flat diagonals (0,3,z) to (3,0,z)
         for (int z = 0; z < 4; z++)
         {
-            if ((threeDMatrix[0, 3, z] % 2 == player) &&
-                (threeDMatrix[1, 2, z] % 2 == player) &&
-                (threeDMatrix[2, 1, z] % 2 == player) &&
-                (threeDMatrix[3, 0, z] % 2 == player))
+            if (threeDMatrix[0, 3, z] != -1)
             {
-                return true;
+                int colour = threeDMatrix[0, 3, z] % 2;
+                if (threeDMatrix[1, 2, z] % 2 == colour &&
+                    threeDMatrix[2, 1, z] % 2 == colour &&
+                    threeDMatrix[3, 0, z] % 2 == colour)
+                {
+                    return true;
+                }
             }
+
         }
+
         //Check flat diagonals (0,0,z) to (3,3,z)
         for(int z = 0; z < 4; z++)
         {
-            if ((threeDMatrix[0, 0, z] % 2 == player) &&
-                (threeDMatrix[1, 1, z] % 2 == player) &&
-                (threeDMatrix[2, 2, z] % 2 == player) &&
-                (threeDMatrix[3, 3, z] % 2 == player))
+            if (threeDMatrix[0, 0, z] != -1)
             {
-                return true;
+                int colour = threeDMatrix[0, 0, z] % 2;
+                if (threeDMatrix[1, 1, z] % 2 == colour &&
+                    threeDMatrix[2, 2, z] % 2 == colour &&
+                    threeDMatrix[3, 3, z] % 2 == colour)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -266,7 +320,7 @@ public class Spielfeld : MonoBehaviour
 
 
 
-    private bool gameOverByDraw()
+    public bool gameOverByDraw()
     {
         if(turnNumber == 63)
         {
