@@ -15,8 +15,8 @@ Library: D:\Schule\3D_Four_Connect\Temp\BurstOutput\Data\Plugins\x86_64\lib_burs
 --assembly-defines=Unity.Netcode.Components;
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsMonitor.Configuration;
 --assembly-defines=Unity.Multiplayer.Tools.NetStats;
---assembly-defines=Unity.Netcode.Runtime;
 --assembly-defines=Unity.Collections;
+--assembly-defines=Unity.Netcode.Runtime;
 --assembly-defines=Unity.Multiplayer.Tools.MetricTestData;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Multiplayer.Tools.Common;
@@ -35,10 +35,10 @@ Library: D:\Schule\3D_Four_Connect\Temp\BurstOutput\Data\Plugins\x86_64\lib_burs
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsReporting;
 --assembly-defines=Unity.Multiplayer.Tools.MetricEvents;
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsMonitor.Component;
+--assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=Newtonsoft.Json;
---assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
@@ -166,8 +166,8 @@ Library: D:\Schule\3D_Four_Connect\Temp\BurstOutput\Data\Plugins\x86_64\lib_burs
 --assembly-defines=Unity.Netcode.Components;
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsMonitor.Configuration;
 --assembly-defines=Unity.Multiplayer.Tools.NetStats;
---assembly-defines=Unity.Netcode.Runtime;
 --assembly-defines=Unity.Collections;
+--assembly-defines=Unity.Netcode.Runtime;
 --assembly-defines=Unity.Multiplayer.Tools.MetricTestData;
 --assembly-defines=Unity.TextMeshPro;
 --assembly-defines=Unity.Multiplayer.Tools.Common;
@@ -186,10 +186,10 @@ Library: D:\Schule\3D_Four_Connect\Temp\BurstOutput\Data\Plugins\x86_64\lib_burs
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsReporting;
 --assembly-defines=Unity.Multiplayer.Tools.MetricEvents;
 --assembly-defines=Unity.Multiplayer.Tools.NetStatsMonitor.Component;
+--assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=Unity.VisualScripting.Antlr3.Runtime;
 --assembly-defines=Unity.Burst.Unsafe;
 --assembly-defines=Newtonsoft.Json;
---assembly-defines=Unity.Collections.LowLevel.ILSupport;
 --assembly-defines=System.Runtime;
 --assembly-defines=netstandard;
 --assembly-defines=Mono.Security;
