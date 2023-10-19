@@ -60,6 +60,8 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     {
         if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
+            Spielfeld.Instance.placedSphere = true;
+
             if (Spielfeld.Instance.turnNumber % 2 == 0)
             {
                 // Call callback function in Spielfeld to handle the new sphere

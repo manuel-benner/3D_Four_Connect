@@ -24,10 +24,10 @@ public class Kamera : MonoBehaviour
             if(!(transform.position.y < 33))
             {
                 yChange = -0.7f * inputFactor * Time.deltaTime;
-                zChange = 0.4f * inputFactor * Time.deltaTime;
+                zChange = 0.8f * inputFactor * Time.deltaTime;
                 transform.Translate(0, yChange, zChange);
                 var currEulerAngles = transform.eulerAngles;
-                currEulerAngles.x -= 0.08f;
+                currEulerAngles.x -= 0.1f;
                 transform.rotation = Quaternion.Euler(currEulerAngles);
             }
         }
@@ -37,10 +37,10 @@ public class Kamera : MonoBehaviour
             if(!(transform.position.y > 175))
             {
                 yChange = 0.7f * inputFactor * Time.deltaTime;
-                zChange = -0.4f * inputFactor * Time.deltaTime;
+                zChange = -0.8f * inputFactor * Time.deltaTime;
                 transform.Translate(0, yChange, zChange);
                 var currEulerAngles = transform.eulerAngles;
-                currEulerAngles.x += 0.08f;
+                currEulerAngles.x += 0.1f;
                 transform.rotation = Quaternion.Euler(currEulerAngles);
             }            
         }

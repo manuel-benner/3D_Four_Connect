@@ -13,11 +13,13 @@ public class GameManager : NetworkBehaviour
         if (!NetworkManager.Singleton.IsServer)
         {
             Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
+            Spielfeld.Instance.player = 1;
             Debug.Log(Spielfeld.Instance.myStatus);
             return;
         }
         Debug.Log(Spielfeld.Instance.myStatus);
         Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
+        Spielfeld.Instance.player = 0;
     }
 
     public void SpawnBall(Vector3 position, string stringIdentifier)
@@ -46,10 +48,12 @@ public class GameManager : NetworkBehaviour
     {
         if(Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
+            Spielfeld.Instance.placedSphere = false;
             Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
         }
         else if(Spielfeld.Instance.myStatus == Spielfeld.Status.opponentTurn)
         {
+            Spielfeld.Instance.placedSphere = false;
             Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
             Spielfeld.Instance.HandleSphereSpawn(stringIdentifier);
         }

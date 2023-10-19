@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Spielfeld.unity
     guid: 297e3793623441d4a9c0fb164b4c7f1b
+  - enabled: 1
+    path: Assets/Scenes/Spielfeld_Hotseat.unity
+    guid: 516b5e4fa3e34fe49b1f5342ef306074
   m_configObjects: {}

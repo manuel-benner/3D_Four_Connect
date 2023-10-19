@@ -81,8 +81,8 @@ public class MenuController : MonoBehaviour
 
     public void StartHotseat()
     {
-        Debug.Log("Starting Hotseat game");
-        throw new NotImplementedException();
+        SceneManager.LoadScene("Spielfeld_Hotseat", LoadSceneMode.Single);
+        Debug.Log("Starting hotseat game");
     }
 
     public void ExitBtn()
