@@ -13,9 +13,11 @@ public class UI_Controller : MonoBehaviour
     [SerializeField] GameObject PauseMenu;
     [SerializeField] GameObject IngameOverlay;
     [SerializeField] GameObject ConfirmationScreen;
-    //[SerializeField] GameObject Spielfeld;
+    [SerializeField] GameObject MessageBox;
 
-    bool menuCallable;
+    internal NetworkEvents networkEvents;
+
+    internal bool menuCallable;
 
 
     // Start is called before the first frame update
@@ -24,137 +26,43 @@ public class UI_Controller : MonoBehaviour
         if (PauseMenu == null) throw new Exception("PauseMenu is not given");
         if (IngameOverlay == null) throw new Exception("IngameOverlay is not given");
         if (ConfirmationScreen == null) throw new Exception("ConfirmationScreen is not given");
+        if (MessageBox == null) throw new Exception("MessageBox is not given");
+
+        Setup();
 
 
+        networkEvents = new NetworkEvents(this);
+
+        MessageboxSetup();
         SetPauseMenuButtonFunctions();
 
-        IngameOverlay.SetActive(true);
-        PauseMenu.SetActive(false);
+
+
 
         menuCallable = true;
     }
 
-    // Update is called once per frame
+
+    public void Setup()
+    {
+        MessageBox.SetActive(false);
+        IngameOverlay.SetActive(true);
+        PauseMenu.SetActive(false);
+        ConfirmationScreen.SetActive(false);
+    }
+
+
+    #region Opening PauseMenu
+
     void Update()
     {
         if (Input.GetButton("Cancel") && menuCallable)
         {
             TogglePauseMenu();
-            StartCoroutine(Cooldown());
+            StartCoroutine(PauseMenuCooldown());
         }
     }
 
-    #region RestartConfiguration
-
-    UnityAction AllNo;
-    UnityAction restartYes;
-    UnityAction LeaveYes;
-
-    public void RestartConfirmation()
-    {
-        ConfirmationScreen.SetActive(true);
-        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to restart?", restartYes, AllNo);
-        PauseMenu.SetActive(false);
-    }
-    
-    public void LeaveConfirmation()
-    {
-        ConfirmationScreen.SetActive(true);
-        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to leave?", LeaveYes, AllNo);
-        PauseMenu.SetActive(false);
-    }
-
-    private void BackToPauseMenu()
-    {
-        ConfirmationScreen.SetActive(false);
-        PauseMenu.SetActive(true);
-    }
-
-
-    #endregion
-
-    #region PauseMenu
-
-    IEnumerator Cooldown()
-    {
-        // Deactivate myButton
-        menuCallable = false;
-        // Wait for cooldown duration
-        yield return new WaitForSeconds(0.2f);
-        // Reactivate myButton
-        menuCallable = true;
-    }
-
-    private void SetPauseMenuButtonFunctions()
-    {
-        Button[] PauseMenuButtons = getPauseMenuButtons();
-        //setting the action, that is called in the onclick method 
-        restartYes += restartGame;
-        LeaveYes += leaveGame;
-        AllNo += BackToPauseMenu;
-
-        SetRestartButton(getButtonByName(PauseMenuButtons, "RestartGame"));
-        SetLeaveButton(getButtonByName(PauseMenuButtons, "LeaveGame"));
-        SetResumeButton(getButtonByName(PauseMenuButtons, "ResumeGame"));
-    }
-
-    private void SetResumeButton(Button ResumeButton)
-    {
-        ResumeButton.onClick.AddListener(TogglePauseMenu);
-    }
-
-    private void SetLeaveButton(Button LeaveButton)
-    {
-        
-        LeaveButton.onClick.AddListener(LeaveConfirmation);
-    }
-
-    private void SetRestartButton(Button RestartButton)
-    {
-        
-        RestartButton.onClick.AddListener(RestartConfirmation);
-        if (NetworkManager.Singleton == null)
-        {
-            //throw new Exception("No Network Manager given");
-        }
-        else if (NetworkManager.Singleton.IsHost)
-        {
-            RestartButton.enabled = true;
-        }
-        else if (NetworkManager.Singleton.IsClient)
-        {
-            RestartButton.enabled = false;
-        }
-    }
-
-    private void leaveGame()
-    {
-        NetworkManager.Singleton.Shutdown();
-        SceneManager.LoadScene("MainMenu");
-    }
-
-    private void restartGame()
-    {
-        Spielfeld.Instance.resetPlayfield();
-    }
-
-
-    private Button getButtonByName(Button[] buttonList, string name)
-    {
-        foreach (Button button in buttonList)
-        {
-            if (button.name == name)
-            {
-                return button;
-            }
-        }
-        throw new Exception($"In UI_Controller: cannot open Button Obj {name}");
-    }
-
-    private Button[] getPauseMenuButtons()
-    {
-        return PauseMenu.GetComponentsInChildren<Button>();
-    }
     private void TogglePauseMenu()
     {
         if (PauseMenu.activeSelf)
@@ -168,16 +76,135 @@ public class UI_Controller : MonoBehaviour
             IngameOverlay.SetActive(false);
         }
     }
+
+    IEnumerator PauseMenuCooldown()
+    {
+        // deactivate menu
+        menuCallable = false;
+        // Wait for cooldown duration
+        yield return new WaitForSeconds(0.3f);
+        // Reactivate menu
+        menuCallable = true;
+    }
     #endregion
 
+    #region ConfirmationConfig
 
+    UnityAction ReturnToMenu;
+    UnityAction ConfirmedRestart;
+    UnityAction ConfirmedLeave;
 
+    public void RestartConfirmation()
+    {
+        ConfirmationScreen.SetActive(true);
+        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to restart?", ConfirmedRestart, ReturnToMenu);
+        PauseMenu.SetActive(false);
+    }
 
+    public void LeaveConfirmation()
+    {
+        ConfirmationScreen.SetActive(true);
+        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to leave?", ConfirmedLeave, ReturnToMenu);
+        PauseMenu.SetActive(false);
+    }
 
+    private void BackToPauseMenu()
+    {
+        ConfirmationScreen.SetActive(false);
+        PauseMenu.SetActive(true);
+    }
+    #endregion
 
+    #region MessageboxConfig
 
+    UnityAction GameLeftMessagebox;
 
-    private class NetworkEvents : NetworkBehaviour
+    private void MessageboxSetup()
+    {
+        GameLeftMessagebox += GoToMainMenu;
+    }
+    
+    private void OtherPlayerLeftMessagebox()
+    {
+        MessageBox.SetActive(true);
+        MessageBox.GetComponent<SetMessageBox>().SetUpMessageBox("Other player left", GameLeftMessagebox);
+    }
+
+    private void GoToMainMenu()
+    {
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    #endregion
+
+    #region PauseMenuButtons
+    private void SetPauseMenuButtonFunctions()
+    {
+        Button[] PauseMenuButtons = GetPauseMenuButtons();
+        //setting the action, that is called in the onclick method 
+        ConfirmedRestart += ButtonMethodRestartGame;
+        ConfirmedLeave += ButtonMethodLeaveGame;
+        ReturnToMenu += BackToPauseMenu;
+
+        SetRestartButton(GetButtonByName(PauseMenuButtons, "RestartGame"));
+        GetButtonByName(PauseMenuButtons, "LeaveGame").onClick.AddListener(LeaveConfirmation);
+        GetButtonByName(PauseMenuButtons, "ResumeGame").onClick.AddListener(TogglePauseMenu);
+    }
+
+    private void SetRestartButton(Button RestartButton)
+    {
+        
+        RestartButton.onClick.AddListener(RestartConfirmation);
+        if (NetworkManager.Singleton == null)
+        {
+            throw new Exception("No Network Manager given");
+        }
+        else if (NetworkManager.Singleton.IsHost)
+        {
+            RestartButton.enabled = true;
+        }
+        else if (NetworkManager.Singleton.IsClient)
+        {
+            RestartButton.enabled = false;
+        }
+    }
+
+    private void ButtonMethodLeaveGame()
+    {
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    private void ButtonMethodRestartGame()
+    {
+        Spielfeld.Instance.resetPlayfield();
+        ConfirmationScreen.SetActive(false);
+        // client RPC that resets the UI on the client
+        networkEvents.ResetUIClientRpc();
+        // reset Ui on this side
+        Setup();
+    }
+
+    private Button GetButtonByName(Button[] buttonList, string name)
+    {
+        foreach (Button button in buttonList)
+        {
+            if (button.name == name)
+            {
+                return button;
+            }
+        }
+        throw new Exception($"In UI_Controller: cannot open Button Obj {name}");
+    }
+
+    private Button[] GetPauseMenuButtons()
+    {
+        return PauseMenu.GetComponentsInChildren<Button>();
+    }
+    #endregion
+
+    internal class NetworkEvents : NetworkBehaviour
     {
         UI_Controller ui_Controller;
         public NetworkEvents(UI_Controller outerClass)
@@ -197,14 +224,20 @@ public class UI_Controller : MonoBehaviour
             }
         }
 
+        [ClientRpc]
+        public void ResetUIClientRpc()
+        {
+            ui_Controller.Setup();
+        }
+
         private void ClientDisconnected(ulong obj)
         {
-            throw new NotImplementedException();
+            ui_Controller.OtherPlayerLeftMessagebox();
         }
 
         private void ServerStopped(bool obj)
         {
-            throw new NotImplementedException();
+            ui_Controller.OtherPlayerLeftMessagebox();
         }
     }
 }

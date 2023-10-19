@@ -61,6 +61,7 @@ public class MenuController : MonoBehaviour
         if (! SetJoinAdress(ipAdress))
         {
             Debug.Log("Error: Invalid Ip inserted cannot join a game");
+            InvalidIpScreen.GetComponent<ChangeText>().SetText("Invalid IP-Adress");
             InvalidIpScreen.gameObject.SetActive(true);
         }
     }
