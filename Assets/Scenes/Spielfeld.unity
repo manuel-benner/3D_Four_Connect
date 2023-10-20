@@ -4900,6 +4900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9e34d25af9f64542bf8f40ffeb2308e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 116157343}
   myStatus: 0
   turnNumber: 0
   placedSphere: 0

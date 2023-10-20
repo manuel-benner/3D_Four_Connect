@@ -178,7 +178,8 @@ public class UI_Controller : MonoBehaviour
 
     private void ButtonMethodRestartGame()
     {
-        Spielfeld.Instance.resetPlayfield();
+        //Spielfeld.Instance.resetPlayfield();
+        Spielfeld.Instance.myStatus = Spielfeld.Status.newGame;
         ConfirmationScreen.SetActive(false);
         // client RPC that resets the UI on the client
         networkEvents.ResetUIClientRpc();
