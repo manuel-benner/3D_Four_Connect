@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using static MainMenuController;
+using UnityEngine.Events;
 
 public class ClientWait : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class ClientWait : MonoBehaviour
     [SerializeField] private float? secondsUntilTimeout;
 
     [SerializeField] private GameObject ErrorBox;
+
+    [SerializeField] GameObject NetworkGameSelection;
 
     private NetworkEventListener networkEventClass;
 
@@ -51,14 +55,32 @@ public class ClientWait : MonoBehaviour
             Error("Connection timed out");
         }
     }
+    private void SetupErrorBox(string ErrorMessage, UnityAction ButtonAction)
+    {
+        MenuElement ErrorBoxSetup = new MenuElement(ErrorBox);
+
+        ErrorBoxSetup.ConfigureTextElement("ErrorMessage", ErrorMessage);
+
+        ErrorBoxSetup.ConfigureButton("AcceptBtn", ButtonAction);
+
+    }
 
     private void Error(string message)
     {
         NetworkManager.Singleton.Shutdown();
-        ErrorBox.GetComponent<ChangeText>().SetText(message);
-        ErrorBox.SetActive(true);
+        UnityAction BackToNetwork = BackToNetworkSelection;
+        SetupErrorBox("Connection timed out",BackToNetwork);
         gameObject.SetActive(false);
+        ErrorBox.SetActive(true);
     }
+
+    private void BackToNetworkSelection()
+    {
+        gameObject.SetActive(false);
+        NetworkGameSelection.SetActive(true);
+        ErrorBox.SetActive(false) ;
+    }
+
     public class NetworkEventListener : NetworkBehaviour
     {
         private ClientWait clientWait;

@@ -7,20 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class HostWait : MonoBehaviour
 {
-    private float StartTime;
-
     [SerializeField] private string levelString;
 
     [SerializeField] private float? secondsUntilTimeout;
 
     [SerializeField] GameObject NetworkSelection;
 
-    //private wait networkEventClass;
-
-
     private void OnEnable()
     {
-        StartTime = Time.time;
         if (secondsUntilTimeout == null)
         {
             secondsUntilTimeout = 5f;
@@ -45,7 +39,7 @@ public class HostWait : MonoBehaviour
             StartGame();
         }
     }
-    public void StartGame()
+    private void StartGame()
     {
         if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsHost)
         {
