@@ -65,6 +65,18 @@ public class UI_Controller: MonoBehaviour
         Debug.Log($"Winner ...");
     }
 
+    private void SetupPlayerTurn()
+    {
+        if (NetworkActivated)
+        {
+            Spielfeld.OnNewTurn += UpdatePlayerTurn;
+        }
+        else
+        {
+            Spielfeld_Hotseat.OnNewTurn += UpdatePlayerTurn;
+        }
+    }
+
     void Update()
     {
         if (Input.GetButton("Cancel") && menuCallable)
@@ -90,21 +102,7 @@ public class UI_Controller: MonoBehaviour
         }
     }
 
-    
-
     #region Setup PlayerTurn
-
-    private void SetupPlayerTurn()
-    {
-        if (NetworkActivated)
-        {
-            Spielfeld.OnNewTurn += UpdatePlayerTurn;
-        }
-        else
-        {
-            Spielfeld_Hotseat.OnNewTurn += UpdatePlayerTurn;
-        }
-    }
 
     private void UpdatePlayerTurn()
     {
