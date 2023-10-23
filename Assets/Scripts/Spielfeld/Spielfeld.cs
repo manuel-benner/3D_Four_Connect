@@ -7,6 +7,19 @@ public class Spielfeld : MonoBehaviour
 {
     public delegate bool onSphereSpawn(string sphereIdentifier);
     public static event onSphereSpawn SphereSpawned;
+
+    public delegate void onNewTurn();
+    public static event onNewTurn OnNewTurn;
+
+    public delegate void onReset();
+    public static event onReset OnReset;
+
+    public delegate void onWin();
+    public static event onWin OnWin;
+
+    public delegate void onDraw();
+    public static event onDraw OnDraw;
+
     public static Spielfeld Instance;
     public enum Status
     {
@@ -31,6 +44,7 @@ public class Spielfeld : MonoBehaviour
     {
         threeDMatrix = create3dMatrix();
         placedSphere = false;
+        OnNewTurn();
     }
 
     // Add event
@@ -62,6 +76,7 @@ public class Spielfeld : MonoBehaviour
         {
             if (int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
             {
+
                 for (int i = 0; i < 4; i++)
                 {
                     if (threeDMatrix[x,y,i] == -1)
@@ -74,14 +89,20 @@ public class Spielfeld : MonoBehaviour
                         if (gameOverByWin())
                         {
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;
+
                             Debug.Log("Game over by win");
+                            OnWin?.Invoke();
                         }
                         else if (gameOverByDraw())
                         {
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverDraw;
                             Debug.Log("Game over by draw");
+                            OnDraw?.Invoke();
                         }
-                        
+                        else
+                        {
+                            OnNewTurn();
+                        }                        
                         return true;
                     }
                 }

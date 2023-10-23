@@ -33,7 +33,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.myTurn)
+        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2)
         {
             if (Spielfeld_Hotseat.Instance.turnNumber % 2 == 0)
             {
@@ -57,7 +57,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.myTurn)
+        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2)
         {
             if (Spielfeld_Hotseat.Instance.turnNumber % 2 == 0)
             {

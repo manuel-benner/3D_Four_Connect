@@ -44,7 +44,7 @@ public class GameManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void SendSpawnToClientRpc(string stringIdentifier)
+    private void SendSpawnToClientRpc(string sphereIdentifier)
     {
         if(Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
         {
@@ -55,7 +55,7 @@ public class GameManager : NetworkBehaviour
         {
             Spielfeld.Instance.placedSphere = false;
             Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
-            Spielfeld.Instance.HandleSphereSpawn(stringIdentifier);
+            Spielfeld.Instance.HandleSphereSpawn(sphereIdentifier);
         }
         Debug.Log(Spielfeld.Instance.myStatus);
     }

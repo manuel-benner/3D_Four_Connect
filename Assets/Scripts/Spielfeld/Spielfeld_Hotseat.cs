@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.Netcode;
 using UnityEngine;
 
 public class Spielfeld_Hotseat : MonoBehaviour
@@ -8,16 +11,25 @@ public class Spielfeld_Hotseat : MonoBehaviour
 
     public delegate bool onSphereSpawn(string sphereIdentifier);
     public static event onSphereSpawn SphereSpawned;
+
+    public delegate void onNewTurn();
+    public static event onNewTurn OnNewTurn;
+
+    public delegate void onWin();
+    public static event onWin OnWin;
+
+    public delegate void onDraw();
+    public static event onDraw OnDraw;
+
     public static Spielfeld_Hotseat Instance;
     public enum status
     {
-        myTurn,
-        opponentTurn,
+        Player1,
+        Player2,
         gameOverWin,
         gameOverDraw
     }
 
-    // Initialize by network
     public status myStatus;
 
     private int[,,] threeDMatrix;
@@ -28,8 +40,8 @@ public class Spielfeld_Hotseat : MonoBehaviour
     {
         playerTurn = true;
         threeDMatrix = create3dMatrix();
-        // Initialize by network
-        myStatus = status.myTurn;
+        myStatus = status.Player1;
+        OnNewTurn?.Invoke();
     }
 
     // Add event
@@ -52,10 +64,22 @@ public class Spielfeld_Hotseat : MonoBehaviour
         SphereSpawned -= HandleSphereSpawn;
     }
 
+    public void resetPlayfield()
+    {
+        threeDMatrix = create3dMatrix();
+        turnNumber = 0;
+        GameObject[] spawnedSpheres = GameObject.FindGameObjectsWithTag("GespawnteKugel");
+        foreach (GameObject sphere in spawnedSpheres)
+        {
+            Destroy(sphere);
+        }
+        Instance.myStatus = status.Player1;
+    }
+
     public bool HandleSphereSpawn(string sphereIdentifier)
     {
         string[] coords = sphereIdentifier.Split(',');
-        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.myTurn || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.opponentTurn)
+        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2)
         {
             if (coords.Length == 2)
             {
@@ -70,10 +94,23 @@ public class Spielfeld_Hotseat : MonoBehaviour
                             if (gameOverByWin())
                             {
                                 Spielfeld_Hotseat.Instance.myStatus = Spielfeld_Hotseat.status.gameOverWin;
+                                OnWin?.Invoke();
                             }
                             else if (gameOverByDraw())
                             {
                                 Spielfeld_Hotseat.Instance.myStatus = Spielfeld_Hotseat.status.gameOverDraw;
+                                OnDraw?.Invoke();
+                            }
+                            // setting new status 
+                            if (Spielfeld_Hotseat.Instance.myStatus == status.Player1)
+                            {
+                                Instance.myStatus = status.Player2;
+                                OnNewTurn?.Invoke();
+                            }
+                            else if (Spielfeld_Hotseat.Instance.myStatus == status.Player2)
+                            {
+                                Instance.myStatus = status.Player1;
+                                OnNewTurn?.Invoke();
                             }
                             return true;
                         }
@@ -91,6 +128,16 @@ public class Spielfeld_Hotseat : MonoBehaviour
         }
 
         return false;
+    }
+
+    public status? getWinner()
+    {
+        if (Instance.myStatus == status.gameOverWin)
+        {
+            if (turnNumber % 2 == 0) return status.Player1;
+            else return status.Player2;
+        }
+        return null;
     }
 
     // Update is called once per frame
