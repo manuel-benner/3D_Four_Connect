@@ -69,9 +69,6 @@ public class Spielfeld : MonoBehaviour
                     {
                         threeDMatrix[x, y, i] = turnNumber;
                         turnNumber++;
-
-
-
                         if (gameOverByWin())
                         {
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;

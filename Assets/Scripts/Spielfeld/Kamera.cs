@@ -17,51 +17,45 @@ public class Kamera : MonoBehaviour
         float yChange;
         float zChange;
         float angleChange;
+
         // C -> Kamera vom Betrachter weg
         // V -> Kamera zum Betrachter hin
         if (Input.GetKey(KeyCode.C))
         {
-            if(!(transform.position.y < 33))
+            if (!(transform.position.y < 33))
             {
-                yChange = -0.7f * inputFactor * Time.deltaTime;
-                zChange = 0.8f * inputFactor * Time.deltaTime;
+                yChange = -0.5f * inputFactor * Time.deltaTime; // Adjust for desired speed
+                zChange = 0.7f * inputFactor * Time.deltaTime;  // Adjust for desired speed
                 transform.Translate(0, yChange, zChange);
                 var currEulerAngles = transform.eulerAngles;
-                currEulerAngles.x -= 0.1f;
+                currEulerAngles.x -= 0.25f * inputFactor * Time.deltaTime; // Adjust for desired rotation speed
                 transform.rotation = Quaternion.Euler(currEulerAngles);
             }
         }
-        
         else if (Input.GetKey(KeyCode.V))
         {
-            if(!(transform.position.y > 175))
+            if (!(transform.position.y > 150))
             {
-                yChange = 0.7f * inputFactor * Time.deltaTime;
-                zChange = -0.8f * inputFactor * Time.deltaTime;
+                yChange = 0.5f * inputFactor * Time.deltaTime;  // Adjust for desired speed
+                zChange = -0.7f * inputFactor * Time.deltaTime; // Adjust for desired speed
                 transform.Translate(0, yChange, zChange);
                 var currEulerAngles = transform.eulerAngles;
-                currEulerAngles.x += 0.1f;
+                currEulerAngles.x += 0.25f * inputFactor * Time.deltaTime;  // Adjust for desired rotation speed
                 transform.rotation = Quaternion.Euler(currEulerAngles);
-            }            
+            }
         }
-
 
         // J -> Kamera nach links um das Spielfeld herum
         // K -> Kamera nach rechts um das Spielfeld herum
         if (Input.GetKey(KeyCode.J))
         {
-            angleChange = 0.5f * inputFactor * Time.deltaTime;
-            transform.RotateAround(new Vector3(0, 0, 0),
-            new Vector3(0, 1, 0), angleChange);
+            angleChange = 0.5f * inputFactor * Time.deltaTime; // Adjust for desired rotation speed
+            transform.RotateAround(new Vector3(0, 0, 0), new Vector3(0, 1, 0), angleChange);
         }
-
         else if (Input.GetKey(KeyCode.K))
         {
-            angleChange = -0.5f * inputFactor * Time.deltaTime;
-            transform.RotateAround(new Vector3(0, 0, 0),
-            new Vector3(0, 1, 0), angleChange);
+            angleChange = -0.5f * inputFactor * Time.deltaTime; // Adjust for desired rotation speed
+            transform.RotateAround(new Vector3(0, 0, 0), new Vector3(0, 1, 0), angleChange);
         }
-
-
     }
 }
