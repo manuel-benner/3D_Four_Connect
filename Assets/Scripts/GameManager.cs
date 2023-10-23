@@ -30,6 +30,25 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+    public void ResetPlayfield()
+    {
+        ResetPlayfieldServerRpc();
+    }
+
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ResetPlayfieldServerRpc()
+    {
+        ResetClientRpc();
+    }
+
+    [ClientRpc]
+    private void ResetClientRpc()
+    {
+        Spielfeld.Instance.resetPlayfieldThisClient();
+    }
+
+
     [ServerRpc(RequireOwnership = false)]
     private void SpawnBallServerRpc(Vector3 position, string stringIdentifier, ServerRpcParams serverRpcParams)
     {

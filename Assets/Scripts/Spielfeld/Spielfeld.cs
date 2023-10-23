@@ -21,6 +21,7 @@ public class Spielfeld : MonoBehaviour
     public static event onDraw OnDraw;
 
     public static Spielfeld Instance;
+    public GameManager gameManager;
     public enum Status
     {
         myTurn,
@@ -37,7 +38,7 @@ public class Spielfeld : MonoBehaviour
     public int player;
 
     private int[,,] threeDMatrix;
-       
+
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +52,7 @@ public class Spielfeld : MonoBehaviour
     public void Awake()
     {
         SphereSpawned += HandleSphereSpawn;
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -72,20 +73,17 @@ public class Spielfeld : MonoBehaviour
 
         string[] coords = sphereIdentifier.Split(',');
 
-        if (coords.Length == 2 )
+        if (coords.Length == 2)
         {
             if (int.TryParse(coords[0], out int x) && int.TryParse(coords[1], out int y))
             {
 
                 for (int i = 0; i < 4; i++)
                 {
-                    if (threeDMatrix[x,y,i] == -1)
+                    if (threeDMatrix[x, y, i] == -1)
                     {
                         threeDMatrix[x, y, i] = turnNumber;
                         turnNumber++;
-                        
-
-
                         if (gameOverByWin())
                         {
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;
@@ -122,14 +120,15 @@ public class Spielfeld : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Spielfeld.Instance.myStatus == Spielfeld.Status.newGame)
+        if (Spielfeld.Instance.myStatus == Spielfeld.Status.newGame)
         {
             resetPlayfield();
         }
     }
 
-    public void resetPlayfield()
+    public void resetPlayfieldThisClient()
     {
+        Debug.Log("Resetting this playfield");
         threeDMatrix = create3dMatrix();
         turnNumber = 0;
         GameObject[] spawnedSpheres = GameObject.FindGameObjectsWithTag("GespawnteKugel");
@@ -147,9 +146,14 @@ public class Spielfeld : MonoBehaviour
         }
     }
 
+    public void resetPlayfield()
+    {
+        gameManager.ResetPlayfield();
+    }
+
     public bool gameOverByWin()
     {
-        if(CheckHorizontalWin(Spielfeld.Instance.player) || CheckVerticalWin(Spielfeld.Instance.player) || CheckDiagonalWin(Spielfeld.Instance.player))
+        if(CheckHorizontalWin() || CheckVerticalWin() || CheckDiagonalWin())
         {
             return true;
         }
@@ -157,7 +161,7 @@ public class Spielfeld : MonoBehaviour
     }
 
 
-    private bool CheckHorizontalWin(int player)
+    private bool CheckHorizontalWin()
     {
         for (int x = 0; x < 4; x++)
         {
@@ -179,7 +183,7 @@ public class Spielfeld : MonoBehaviour
     }
 
 
-    bool CheckVerticalWin(int player)
+    bool CheckVerticalWin()
     {
         for (int x = 0; x < 4; x++)
         {
@@ -201,7 +205,7 @@ public class Spielfeld : MonoBehaviour
     }
 
 
-    private bool CheckDiagonalWin(int player)
+    private bool CheckDiagonalWin()
     {
         //Check from x=0 site
         for (int x = 0; x < 4; x++)
