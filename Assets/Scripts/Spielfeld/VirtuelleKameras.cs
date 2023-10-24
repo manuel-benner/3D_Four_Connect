@@ -110,6 +110,7 @@ public class VirtuelleKameras : MonoBehaviour
                 float deltaMouse = (Input.mousePosition.x - mouseDownPosLastFrame.x);
                 angleChange = 0.5f * inputFactor * Time.deltaTime * deltaMouse;
                 orbitAllCameras(angleChange);
+                
             }
             else if (Input.mousePosition.x > mouseDownPosLastFrame.x)
             {
