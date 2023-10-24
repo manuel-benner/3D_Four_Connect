@@ -62,6 +62,11 @@ public class Spielfeld : MonoBehaviour
         }
     }
 
+    public void NewTurn()
+    {
+        OnNewTurn?.Invoke();
+    }
+
     // Remove event
     public void OnDestroy()
     {
@@ -70,7 +75,6 @@ public class Spielfeld : MonoBehaviour
 
     public bool HandleSphereSpawn(string sphereIdentifier)
     {
-
         string[] coords = sphereIdentifier.Split(',');
 
         if (coords.Length == 2)
@@ -96,11 +100,7 @@ public class Spielfeld : MonoBehaviour
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverDraw;
                             Debug.Log("Game over by draw");
                             OnDraw?.Invoke();
-                        }
-                        else
-                        {
-                            OnNewTurn();
-                        }                        
+                        }                
                         return true;
                     }
                 }
@@ -136,6 +136,7 @@ public class Spielfeld : MonoBehaviour
         {
             Destroy(sphere);
         }
+        OnReset();
         if (NetworkManager.Singleton.IsServer)
         {
             Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
@@ -144,6 +145,7 @@ public class Spielfeld : MonoBehaviour
         {
             Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
         }
+        OnNewTurn();
     }
 
     public void resetPlayfield()
