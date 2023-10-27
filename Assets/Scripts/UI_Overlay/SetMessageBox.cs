@@ -15,16 +15,32 @@ public class SetMessageBox : MonoBehaviour
     TMP_Text TextM;
 
     UnityAction closeElement;
-    private void Start()
+    private void OnEnable()
     {
-        Ok = OkButton.GetComponent<Button>();
-        TextM = Text.GetComponent<TMP_Text>();
+        Ok = GetComponentInChildrenByName<Button>("Accept_Button");
+        TextM = GetComponentInChildrenByName<TMP_Text>("Message_Text");
         closeElement += closeEle;
     }
 
     private void closeEle()
     {
         gameObject.SetActive(false);
+    }
+
+
+    private T GetComponentInChildrenByName<T>(string Name)
+        where T : Component
+    {
+        T[] AllComponentsOfThisType = GetComponentsInChildren<T>();
+        
+        foreach(T t in AllComponentsOfThisType)
+        {
+            if(t.name == Name)
+            {
+                return t as T;
+            }
+        }
+        return null;
     }
 
     /// <summary>
@@ -34,15 +50,18 @@ public class SetMessageBox : MonoBehaviour
     /// <param name="OkAction"> Unity action that is called if the button is clicked, if nothing is set, the ok button closes the Messagebox</param>
     public void SetUpMessageBox(string Message, UnityAction OkAction = null)
     {
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
         TextM.text = Message;
 
         if (OkAction != null)
         {
             Ok.onClick.AddListener(OkAction);
         }
-        else 
-        {
-            Ok.onClick.AddListener(closeElement);
-        }
+
+        Ok.onClick.AddListener(closeElement);
+
     }
 }

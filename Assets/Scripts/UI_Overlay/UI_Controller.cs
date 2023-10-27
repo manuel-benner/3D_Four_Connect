@@ -2,6 +2,7 @@ using Assets.Scripts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -17,47 +18,105 @@ public class UI_Controller: MonoBehaviour
     [SerializeField] GameObject MessageBox;
     [SerializeField] bool NetworkActivated;
 
+    private delegate void onOpponentLeft();
+    private event onOpponentLeft OnOpponentLeft;
 
     internal NetworkEvents networkEvents;
 
     internal bool menuCallable;
 
+    private void OnEnable()
+    {
+        // deactivating every GameObject, except PlayerTurn
+        SetupGameObjects();
+    }
+
+    private void OnDisable()
+    {
+        if (NetworkActivated)
+        {
+            OnOpponentLeft -= OpponentLeftMessagebox;
+            Spielfeld.OnReset -= OnResetMessagebox;
+            Spielfeld.OnWin -= OnWinMessagebox;
+            Spielfeld.OnDraw -= OnDrawAction;
+            Spielfeld.OnNewTurn -= UpdatePlayerTurn;
+        }
+        else
+        {
+            Spielfeld_Hotseat.OnWin -= OnWinMessagebox;
+            Spielfeld_Hotseat.OnDraw -= OnDrawAction;
+            Spielfeld_Hotseat.OnNewTurn -= UpdatePlayerTurn;
+        }
+    }
+
 
     // Start is called before the first frame update
-    private void OnEnable()
+    private void Start()
     {
         if (PauseMenu == null) throw new Exception("PauseMenu is not given");
         if (PlayerTurn == null) throw new Exception("PlayerTurn is not given");
         if (ConfirmationScreen == null) throw new Exception("ConfirmationScreen is not given");
         if (MessageBox == null) throw new Exception("MessageBox is not given");
 
-        if (NetworkActivated)
-        {
-            networkEvents = new NetworkEvents(this);
-            Spielfeld.OnReset += SetupGameObjects;
-            Spielfeld.OnWin += OnWinMessagebox;
-            Spielfeld.OnDraw += OnDrawMessagebox;
-        }
-        else
-        {
-            Spielfeld_Hotseat.OnWin += OnWinMessagebox;
-            Spielfeld_Hotseat.OnDraw += OnDrawMessagebox;
-            networkEvents = null;
-        }
-        //setting the event OnNewTurn
-        SetupPlayerTurn();
         // deactivating every GameObject, except PlayerTurn
         SetupGameObjects();
+        //// setting all confirmation events
+        //SetupConfirmationScreeen();
         // setting all Text elements and Button obClick methods
         PauseMenuSetup();
         // setting the messagebox onclick method to close the messagebox
         MessageboxSetup();
         menuCallable = true;
+
+        if (NetworkActivated)
+        {
+            OnOpponentLeft += OpponentLeftMessagebox;
+            networkEvents = new NetworkEvents(this);
+            Spielfeld.OnReset += OnResetMessagebox;
+            Spielfeld.OnWin += OnWinMessagebox;
+            Spielfeld.OnDraw += OnDrawAction;
+            Spielfeld.OnNewTurn += UpdatePlayerTurn;
+        }
+        else
+        {
+            Spielfeld_Hotseat.OnWin += OnWinMessagebox;
+            Spielfeld_Hotseat.OnDraw += OnDrawAction;
+            Spielfeld_Hotseat.OnNewTurn += UpdatePlayerTurn;
+            networkEvents = null;
+        }
+        StartCoroutine(SetPlayerTurn());
     }
 
-    private void OnDrawMessagebox()
+    IEnumerator SetPlayerTurn()
     {
-        Debug.Log("Draw");
+        yield return new WaitForSeconds(Time.deltaTime);
+        UpdatePlayerTurn();
+    }
+
+    private void OnResetMessagebox()
+    {
+        CustomMessagebox("The game has been reset", SetupGameObjects);
+    }
+
+    private void OnDrawAction()
+    {
+        if (NetworkActivated)
+        {
+            if (NetworkManager.Singleton.IsClient)
+            {
+                CustomMessagebox("The game ended in a draw, wait for the host to restart the game");
+            }else if (NetworkManager.Singleton.IsHost)
+            {
+                CustomConfirmationScreen("The game ended in a draw, do you want to start another game", ButtonMethodRestartGame, ButtonMethodLeaveGame);
+            }
+        }
+    }
+
+    private void OpponentLeftMessagebox()
+    {
+        MessageBox.SetActive(true);
+        UnityAction playerleftMethod = ButtonMethodLeaveGame;
+        MessageBox.GetComponent<SetMessageBox>().SetUpMessageBox("Other player left", GameLeftMessagebox);
     }
 
     private void OnWinMessagebox()
@@ -65,16 +124,36 @@ public class UI_Controller: MonoBehaviour
         Debug.Log($"Winner ...");
     }
 
-    private void SetupPlayerTurn()
+    private void PauseMenuSetup()
     {
+        Button[] PauseMenuButtons = GetPauseMenuButtons();
+        //setting the action, that is called in the onclick method 
+
+        Button RestartButton = GetButtonByName(PauseMenuButtons, "RestartGame");
         if (NetworkActivated)
         {
-            Spielfeld.OnNewTurn += UpdatePlayerTurn;
+            if (NetworkManager.Singleton == null)
+            {
+                //throw new Exception("No Network Manager given");
+            }
+            else if (NetworkManager.Singleton.IsHost)
+            {
+                RestartButton.enabled = true;
+            }
+            else if (NetworkManager.Singleton.IsClient)
+            {
+                RestartButton.enabled = false;
+            }
         }
         else
         {
-            Spielfeld_Hotseat.OnNewTurn += UpdatePlayerTurn;
+            RestartButton.enabled = true;
         }
+
+        RestartButton.onClick.AddListener(() => CustomConfirmationScreen("Do you really want to restart the game", ButtonMethodRestartGame, CloseConfirmationScreen));
+
+        GetButtonByName(PauseMenuButtons, "LeaveGame").onClick.AddListener(() => CustomConfirmationScreen("Do you really want to leave the game", ButtonMethodLeaveGame, CloseConfirmationScreen));
+        GetButtonByName(PauseMenuButtons, "ResumeGame").onClick.AddListener(TogglePauseMenu);
     }
 
     void Update()
@@ -90,18 +169,36 @@ public class UI_Controller: MonoBehaviour
     {
         MessageBox.SetActive(false);
         PlayerTurn.SetActive(true);
+        PlayerTurn.AddComponent<MenuElement>();
         PauseMenu.SetActive(false);
+        PauseMenu.AddComponent<MenuElement>();
         ConfirmationScreen.SetActive(false);
+        ConfirmationScreen.AddComponent<MenuElement>();
     }
 
-    private void SafeNetworkManagerShutdown()
+    private void UnloadSceneAndBackToMainMenu()
     {
-        if(NetworkActivated)
+        if (NetworkActivated)
         {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
             NetworkManager.Singleton.Shutdown();
+        }
+        else
+        {
+            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
         }
     }
 
+    private void SetScene(string sceneName, bool isActive)
+    {
+        foreach (GameObject obj in SceneManager.GetSceneByName(sceneName).GetRootGameObjects())
+        {
+            obj.SetActive(isActive);
+        }
+    }
+
+
+    //Works
     #region Setup PlayerTurn
 
     private void UpdatePlayerTurn()
@@ -115,7 +212,7 @@ public class UI_Controller: MonoBehaviour
         {
             statusStr = Spielfeld_Hotseat.Instance.myStatus.ToString();
         }
-        MenuElement PlayerTurnConfig = new MenuElement(PlayerTurn);
+        MenuElement PlayerTurnConfig = PlayerTurn.GetComponent<MenuElement>();
         PlayerTurnConfig.ConfigureTextElement("PlayerTurn_Text", statusStr);
     }
 
@@ -123,6 +220,7 @@ public class UI_Controller: MonoBehaviour
 
     #endregion
 
+    //Works
     #region Opening PauseMenu
     private void TogglePauseMenu()
     {
@@ -151,32 +249,14 @@ public class UI_Controller: MonoBehaviour
 
     #region ConfirmationScreenConfig
 
-    UnityAction ReturnToMenu;
-    UnityAction ConfirmedRestart;
-    UnityAction ConfirmedLeave;
-
-    private void SetupConfirmationScreeen()
-    {
-        ConfirmedRestart += ButtonMethodRestartGame;
-        ConfirmedLeave += ButtonMethodLeaveGame;
-        ReturnToMenu += BackToPauseMenu;
-    }
-
-    public void RestartConfirmation()
+    private void CustomConfirmationScreen(string ConfirmationScreenMessage, UnityAction Confirm, UnityAction Decline)
     {
         ConfirmationScreen.SetActive(true);
-        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to restart?", ConfirmedRestart, ReturnToMenu);
+        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent(ConfirmationScreenMessage, Confirm, Decline);
         PauseMenu.SetActive(false);
     }
 
-    public void LeaveConfirmation()
-    {
-        ConfirmationScreen.SetActive(true);
-        ConfirmationScreen.GetComponent<SetConfirmationScreen>().SetComponent("Do you really want to leave?", ConfirmedLeave, ReturnToMenu);
-        PauseMenu.SetActive(false);
-    }
-
-    private void BackToPauseMenu()
+    private void CloseConfirmationScreen()
     {
         ConfirmationScreen.SetActive(false);
         PauseMenu.SetActive(true);
@@ -189,59 +269,19 @@ public class UI_Controller: MonoBehaviour
 
     private void MessageboxSetup()
     {
-        GameLeftMessagebox += MessageboxBackToMainMenu;
-    }
-    
-    private void OpponentLeftMessagebox()
-    {
-        MessageBox.SetActive(true);
-        UnityAction playerleftMethod = ButtonMethodLeaveGame;
-        MessageBox.GetComponent<SetMessageBox>().SetUpMessageBox("Other player left", GameLeftMessagebox);
+        GameLeftMessagebox += UnloadSceneAndBackToMainMenu;
     }
 
-    private void MessageboxBackToMainMenu()
+    private void CustomMessagebox(string Message, UnityAction acceptAction = null)
     {
-        SafeNetworkManagerShutdown();
-        SceneManager.LoadScene("MainMenu");
+        MessageBox.SetActive(true);
+       
+        MessageBox.GetComponent<SetMessageBox>().SetUpMessageBox(Message, acceptAction);
     }
 
     #endregion
 
     #region PauseMenuConfig
-    private void PauseMenuSetup()
-    {
-        Button[] PauseMenuButtons = GetPauseMenuButtons();
-        //setting the action, that is called in the onclick method 
-        SetupConfirmationScreeen();
-
-        SetRestartButton(GetButtonByName(PauseMenuButtons, "RestartGame"));
-        GetButtonByName(PauseMenuButtons, "LeaveGame").onClick.AddListener(LeaveConfirmation);
-        GetButtonByName(PauseMenuButtons, "ResumeGame").onClick.AddListener(TogglePauseMenu);
-    }
-
-    private void SetRestartButton(Button RestartButton)
-    {
-        RestartButton.onClick.AddListener(RestartConfirmation);
-        if (NetworkActivated)
-        {
-            if (NetworkManager.Singleton == null)
-            {
-                throw new Exception("No Network Manager given");
-            }
-            else if (NetworkManager.Singleton.IsHost)
-            {
-                RestartButton.enabled = true;
-            }
-            else if (NetworkManager.Singleton.IsClient)
-            {
-                RestartButton.enabled = false;
-            }
-        }
-        else
-        {
-            RestartButton.enabled = true;
-        }
-    }
 
     private Button GetButtonByName(Button[] buttonList, string name)
     {
@@ -264,21 +304,13 @@ public class UI_Controller: MonoBehaviour
     #region MainMenu Button Methods
     private void ButtonMethodLeaveGame()
     {
-        SafeNetworkManagerShutdown();
-
         if (NetworkActivated)
         {
-            if (NetworkManager.Singleton.IsHost)
-            {
-
-            }
-            if (NetworkManager.Singleton.IsClient)
-            {
-
-            }
+            //send server RPC that this client has left
+            
         }
 
-        SceneManager.LoadScene("MainMenu");
+        UnloadSceneAndBackToMainMenu();
     }
 
     private void ButtonMethodRestartGame()
@@ -286,6 +318,7 @@ public class UI_Controller: MonoBehaviour
         if (NetworkActivated)
         {
             Spielfeld.Instance.resetPlayfield();
+            networkEvents.ResetUIClientRpc();
         }
         else
         {
@@ -293,7 +326,7 @@ public class UI_Controller: MonoBehaviour
         }
         ConfirmationScreen.SetActive(false);
         // client RPC that resets the UI on the client
-        networkEvents.ResetUIClientRpc();
+        
         // reset Ui on this side
         SetupGameObjects();
     }
@@ -319,10 +352,40 @@ public class UI_Controller: MonoBehaviour
             }
         }
 
+        private void OnDisable()
+        {
+            if (IsClient)
+            {
+                NetworkManager.Singleton.OnServerStopped -= ServerStopped;
+            }
+            else if(IsHost)
+            {
+                NetworkManager.Singleton.OnClientDisconnectCallback -= ClientDisconnected;
+            }
+        }
+    
+
         [ClientRpc]
         public void ResetUIClientRpc()
         {
             ui_Controller.SetupGameObjects();
+        }
+
+        [ClientRpc]
+        public void OtherPlayerLeftClientRpc(ClientRpcParams rpcParams = default)
+        {
+            ui_Controller.OnOpponentLeft?.Invoke();
+        }
+
+
+
+
+        [ServerRpc(RequireOwnership = false)]
+        public void LeaveMessageToOtherPlayerServerRpc(ulong specificClient, ServerRpcParams rpcParams = default)
+        {
+            
+            var SenderCientId = rpcParams.Receive.SenderClientId;
+
         }
 
         private void ClientDisconnected(ulong obj)
@@ -335,4 +398,6 @@ public class UI_Controller: MonoBehaviour
             ui_Controller.OpponentLeftMessagebox();
         }
     }
+
+
 }

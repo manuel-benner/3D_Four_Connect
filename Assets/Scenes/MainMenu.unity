@@ -1738,21 +1738,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1122272458}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NetzwerkCL, Assembly-CSharp
-        m_MethodName: CloseNetwork
+      - m_Target: {fileID: 1122272460}
+        m_TargetAssemblyTypeName: ClientWait, Assembly-CSharp
+        m_MethodName: Back
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1760,19 +1748,7 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 694295328}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &191245649
 MonoBehaviour:
@@ -4449,6 +4425,7 @@ MonoBehaviour:
   JoinScreen: {fileID: 20476656}
   ClientWaitScreen: {fileID: 1122272458}
   ErrorBox: {fileID: 906014762}
+  NetworkManagerObj: {fileID: 1922465686}
 --- !u!1 &506959052
 GameObject:
   m_ObjectHideFlags: 0
@@ -8632,6 +8609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ErrorBox: {fileID: 906014762}
   NetworkGameSelection: {fileID: 776654384}
+  NetworkManagerObj: {fileID: 1922465686}
 --- !u!114 &1122272461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12594,6 +12572,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelString: Spielfeld
   NetworkSelection: {fileID: 776654384}
+  NetworkManagerObj: {fileID: 1922465686}
 --- !u!1 &1557339913
 GameObject:
   m_ObjectHideFlags: 0
@@ -16286,8 +16265,16 @@ PrefabInstance:
       value: NetworkManager
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00012207031
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16303,15 +16290,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16435,6 +16422,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1884305134}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1922465686 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1253649082009807125, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
+  m_PrefabInstance: {fileID: 1884253287}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1926829939
 GameObject:
   m_ObjectHideFlags: 0
@@ -18678,7 +18670,6 @@ SceneRoots:
   - {fileID: 296451128}
   - {fileID: 191374664}
   - {fileID: 492304533}
-  - {fileID: 1884253287}
   - {fileID: 1876121893}
   - {fileID: 863265783}
   - {fileID: 19729166}
@@ -18696,3 +18687,4 @@ SceneRoots:
   - {fileID: 225749892}
   - {fileID: 661582244}
   - {fileID: 917942019}
+  - {fileID: 1884253287}

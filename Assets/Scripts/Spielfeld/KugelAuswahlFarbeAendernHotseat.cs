@@ -18,7 +18,11 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
 
+    private void OnEnable()
+    {
         rend = GetComponent<Renderer>();
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;

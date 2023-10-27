@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Assets.Scripts;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -19,10 +20,25 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject JoinScreen;
     [SerializeField] GameObject ClientWaitScreen;
     [SerializeField] GameObject ErrorBox;
+    [SerializeField] GameObject NetworkManagerObj;
 
 
     // Start is called before the first frame update
     void Start()
+    {
+        
+        SetupGameObjects();
+
+        // Setting up all button logic 
+        SetupMainMenu();
+    }
+
+    private void OnEnable()
+    {
+        SetupGameObjects();
+    }
+
+    private void SetupGameObjects()
     {
         // Deactivating all MainMenu objects except for root which is the object to be interacted with first
         root.SetActive(true);
@@ -32,10 +48,10 @@ public class MainMenuController : MonoBehaviour
         JoinScreen.SetActive(false);
         ClientWaitScreen.SetActive(false);
         ErrorBox.SetActive(false);
-        
-        // Setting up all button logic 
-        SetupMainMenu();
+        NetworkManagerObj.SetActive(false);
     }
+
+
 
     /// <summary>
     /// Setting all Button functionality in code 
@@ -52,8 +68,8 @@ public class MainMenuController : MonoBehaviour
     #region RootSetup
     private void SetupRoot()
     {
-        MenuElement rootSetup = new MenuElement(root);
-
+        root.gameObject.AddComponent<Assets.Scripts.MenuElement>();
+        Assets.Scripts.MenuElement rootSetup = root.GetComponent<Assets.Scripts.MenuElement>();
         rootSetup.ChangeToGameObject("NewGameBtn", NewGameSelection);
 
         UnityAction Exit = ExitBtn;
@@ -70,10 +86,9 @@ public class MainMenuController : MonoBehaviour
     
     private void SetupNewGame()
     {
-        MenuElement NewGameSelectionSetup = new MenuElement(NewGameSelection);
+        Assets.Scripts.MenuElement NewGameSelectionSetup = NewGameSelection.AddComponent<Assets.Scripts.MenuElement>();
 
-        UnityAction StartLocal = StartHotseat;
-        NewGameSelectionSetup.ConfigureButton("LocalGame", StartLocal);
+        NewGameSelectionSetup.ConfigureButton("LocalGame", StartHotseat);
 
         NewGameSelectionSetup.ChangeToGameObject("NetworkGame", NetworkGameSelection);
 
@@ -82,8 +97,15 @@ public class MainMenuController : MonoBehaviour
     }
     public void StartHotseat()
     {
-        SceneManager.LoadScene("Spielfeld_Hotseat", LoadSceneMode.Single);
-        Debug.Log("Starting hotseat game");
+        SceneManager.LoadScene("Spielfeld_Hotseat",LoadSceneMode.Single);
+    }
+
+    private void SetScene(string sceneName, bool isActive)
+    {
+        foreach (GameObject obj in SceneManager.GetSceneByName(sceneName).GetRootGameObjects())
+        {
+            obj.SetActive(isActive);
+        }
     }
 
     #endregion
@@ -92,7 +114,7 @@ public class MainMenuController : MonoBehaviour
 
     private void SetupNetworkGameSelection()
     {
-        MenuElement NetworkGameSelectionSetup = new MenuElement(NetworkGameSelection);
+        Assets.Scripts.MenuElement NetworkGameSelectionSetup = NetworkGameSelection.AddComponent<Assets.Scripts.MenuElement>();
 
         NetworkGameSelectionSetup.ChangeToGameObject("CreateGame", HostWaitScreen);
 
@@ -108,8 +130,8 @@ public class MainMenuController : MonoBehaviour
     
     private void SetupJoinScreen()
     {
-        
-        MenuElement JoinScreenSetup = new MenuElement(JoinScreen);
+
+        Assets.Scripts.MenuElement JoinScreenSetup = JoinScreen.AddComponent<Assets.Scripts.MenuElement>();
 
         UnityAction TakeAdress = SetAdress;
         JoinScreenSetup.ConfigureButton("JoinGame", TakeAdress);
@@ -155,7 +177,7 @@ public class MainMenuController : MonoBehaviour
     // Every setup method is called except this one, because the error box has to be set up before every use (so it is reusable)
     private void SetupErrorBox(string ErrorMessage, UnityAction ButtonAction)
     {
-        MenuElement ErrorBoxSetup = new MenuElement(ErrorBox);
+        Assets.Scripts.MenuElement ErrorBoxSetup = ErrorBox.AddComponent<Assets.Scripts.MenuElement>();
 
         ErrorBoxSetup.ConfigureTextElement("ErrorMessage",ErrorMessage);
 
@@ -170,7 +192,7 @@ public class MainMenuController : MonoBehaviour
 
     private void SetupHostWait()
     {
-        MenuElement HostWaitSetup = new MenuElement(HostWaitScreen);
+        Assets.Scripts.MenuElement HostWaitSetup = HostWaitScreen.AddComponent<Assets.Scripts.MenuElement>();
         UnityAction CancelHosting = HostWaitScreen.GetComponent<HostWait>().Exit;
         HostWaitSetup.ConfigureButton("Back", CancelHosting);
 
@@ -178,65 +200,5 @@ public class MainMenuController : MonoBehaviour
 
     #endregion
 
-    /// <summary>
-    /// Class that is used to setup a Menu Gameobject, it acesses every button child element of this game Object and can set the onclick method 
-    /// </summary>
-    internal class MenuElement
-    {
-        GameObject MenuObject;
 
-        UnityAction<GameObject> ChangeAction;
-
-        public MenuElement(GameObject menuObject)
-        {
-            MenuObject = menuObject;
-        } 
-
-        public void ConfigureButton(string ButtonName, UnityAction ButtonOnclick)
-        {
-            // get the button with the given name ifit does not exist throw an error
-            Button btn = GetButtonByName(ButtonName);
-
-            btn.onClick.AddListener(ButtonOnclick);
-        }
-
-        public void ChangeToGameObject(string ButtonName, GameObject otherGameObj)
-        {
-            Button btn = GetButtonByName(ButtonName);
-            ChangeAction = ChangeTo;
-            btn.onClick.AddListener(() => ChangeAction(otherGameObj));
-        }
-
-        private void ChangeTo(GameObject changeTo)
-        {
-            MenuObject.SetActive(false);
-            changeTo.SetActive(true);
-        }
-
-        public void ConfigureTextElement(string TextElementName, string TextToShow)
-        {
-            TMP_Text text = GetTextByName(TextElementName);
-            if (text == null) throw new Exception($"TMP_Text {TextElementName} does not Exist in {MenuObject.name}");
-
-            text.text = TextToShow;
-        }
-
-        private Button GetButtonByName(string name)
-        {
-            foreach (Button button in MenuObject.GetComponentsInChildren<Button>())
-            {
-                if (button.name == name) return button;
-            }
-            throw new Exception($"Button {name} does not Exist in {MenuObject.name}");
-        }
-
-        private TMP_Text GetTextByName(string name)
-        {
-            foreach(TMP_Text text in MenuObject.GetComponentsInChildren<TMP_Text>())
-            {
-                if (text.name == name) return text;
-            }
-            throw new Exception($"TMP_Text {name} does not Exist in {MenuObject.name}");
-        }
-    }
 }

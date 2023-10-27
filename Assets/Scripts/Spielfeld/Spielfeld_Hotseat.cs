@@ -41,7 +41,6 @@ public class Spielfeld_Hotseat : MonoBehaviour
         playerTurn = true;
         threeDMatrix = create3dMatrix();
         myStatus = status.Player1;
-        OnNewTurn?.Invoke();
     }
 
     // Add event

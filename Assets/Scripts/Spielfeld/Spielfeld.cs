@@ -59,6 +59,7 @@ public class Spielfeld : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            
         }
     }
 

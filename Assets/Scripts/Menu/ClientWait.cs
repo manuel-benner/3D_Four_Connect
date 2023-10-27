@@ -5,6 +5,7 @@ using Unity.Netcode;
 using UnityEngine;
 using static MainMenuController;
 using UnityEngine.Events;
+using Assets.Scripts;
 
 public class ClientWait : MonoBehaviour
 {
@@ -17,11 +18,14 @@ public class ClientWait : MonoBehaviour
 
     [SerializeField] GameObject NetworkGameSelection;
 
+    [SerializeField] GameObject NetworkManagerObj;
+
     private NetworkEventListener networkEventClass;
 
     // Start is called before the first frame update
     private void OnEnable()
     {
+        NetworkManagerObj.SetActive(true);
         clientconnected = false;
         StartTime = Time.time;
         if (secondsUntilTimeout == null)
@@ -40,6 +44,7 @@ public class ClientWait : MonoBehaviour
 
     private void OnDisable()
     {
+        NetworkManagerObj.SetActive(false);
         networkEventClass.RemoveEvents();
     }
 
@@ -55,9 +60,17 @@ public class ClientWait : MonoBehaviour
             Error("Connection timed out");
         }
     }
+
+    public void Back()
+    {
+        NetworkManagerObj.SetActive(false);
+        gameObject.SetActive(false);
+        NetworkGameSelection.SetActive(true);
+    }
+
     private void SetupErrorBox(string ErrorMessage, UnityAction ButtonAction)
     {
-        MenuElement ErrorBoxSetup = new MenuElement(ErrorBox);
+        MenuElement ErrorBoxSetup = ErrorBox.AddComponent<MenuElement>();
 
         ErrorBoxSetup.ConfigureTextElement("ErrorMessage", ErrorMessage);
 

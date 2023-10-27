@@ -13,15 +13,14 @@ namespace Assets.Scripts
     /// <summary>
     /// Class that is used to setup a Menu Gameobject, it acesses every button child element of this game Object and can set the onclick method 
     /// </summary>
-    internal class MenuElement
+    public class MenuElement : MonoBehaviour
     {
-        GameObject MenuObject;
-
         UnityAction<GameObject> ChangeAction;
 
-        public MenuElement(GameObject menuObject)
+
+        private void Start()
         {
-            MenuObject = menuObject;
+            
         }
 
         public void ConfigureButton(string ButtonName, UnityAction ButtonOnclick)
@@ -41,34 +40,34 @@ namespace Assets.Scripts
 
         private void ChangeTo(GameObject changeTo)
         {
-            MenuObject.SetActive(false);
+            gameObject.SetActive(false);
             changeTo.SetActive(true);
         }
 
         public void ConfigureTextElement(string TextElementName, string TextToShow)
         {
             TMP_Text text = GetTextByName(TextElementName);
-            if (text == null) throw new Exception($"TMP_Text {TextElementName} does not Exist in {MenuObject.name}");
+            if (text == null) throw new Exception($"TMP_Text {TextElementName} does not Exist in {gameObject.name}");
 
             text.text = TextToShow;
         }
 
         private Button GetButtonByName(string name)
         {
-            foreach (Button button in MenuObject.GetComponentsInChildren<Button>())
+            foreach (Button button in gameObject.GetComponentsInChildren<Button>())
             {
                 if (button.name == name) return button;
             }
-            throw new Exception($"Button {name} does not Exist in {MenuObject.name}");
+            throw new Exception($"Button {name} does not Exist in {gameObject.name}");
         }
 
         private TMP_Text GetTextByName(string name)
         {
-            foreach (TMP_Text text in MenuObject.GetComponentsInChildren<TMP_Text>())
+            foreach (TMP_Text text in gameObject.GetComponentsInChildren<TMP_Text>())
             {
                 if (text.name == name) return text;
             }
-            throw new Exception($"TMP_Text {name} does not Exist in {MenuObject.name}");
+            return null;
         }
     }
 }
