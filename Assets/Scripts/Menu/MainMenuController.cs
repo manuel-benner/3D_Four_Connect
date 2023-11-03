@@ -20,7 +20,6 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] GameObject JoinScreen;
     [SerializeField] GameObject ClientWaitScreen;
     [SerializeField] GameObject ErrorBox;
-    [SerializeField] GameObject NetworkManagerObj;
 
 
     // Start is called before the first frame update
@@ -48,7 +47,6 @@ public class MainMenuController : MonoBehaviour
         JoinScreen.SetActive(false);
         ClientWaitScreen.SetActive(false);
         ErrorBox.SetActive(false);
-        NetworkManagerObj.SetActive(false);
     }
 
 
@@ -97,15 +95,15 @@ public class MainMenuController : MonoBehaviour
     }
     public void StartHotseat()
     {
+        DestroyNetworkManagerObj();
         SceneManager.LoadScene("Spielfeld_Hotseat",LoadSceneMode.Single);
     }
 
-    private void SetScene(string sceneName, bool isActive)
+    private void DestroyNetworkManagerObj()
     {
-        foreach (GameObject obj in SceneManager.GetSceneByName(sceneName).GetRootGameObjects())
-        {
-            obj.SetActive(isActive);
-        }
+        GameObject NetworkManagerObj = GameObject.FindGameObjectWithTag("NetworkManager");
+        if (NetworkManagerObj != null) Destroy(NetworkManagerObj);
+        else throw new Exception("There is no Game object with the ta NetworkManager -> maybe the Tag has benn reset");
     }
 
     #endregion
@@ -135,7 +133,17 @@ public class MainMenuController : MonoBehaviour
 
         UnityAction TakeAdress = SetAdress;
         JoinScreenSetup.ConfigureButton("JoinGame", TakeAdress);
-        JoinScreenSetup.ChangeToGameObject("Back", NetworkGameSelection);
+        JoinScreenSetup.ConfigureButton("Back", () => ChangeGameObj(JoinScreen, NetworkGameSelection));
+    }
+
+    private void ChangeGameObj(GameObject ThisGameObject, GameObject GameObjToChangeTo, GameObject ObjectToDisableExtra = null)
+    {
+        ThisGameObject.SetActive(false);
+        GameObjToChangeTo.SetActive(true);
+        if (ObjectToDisableExtra != null)
+        {
+            ObjectToDisableExtra.SetActive(false);
+        }
     }
 
     private void SetAdress()
@@ -185,7 +193,6 @@ public class MainMenuController : MonoBehaviour
 
     }
 
-
     #endregion
 
     #region SetupHostWait
@@ -197,8 +204,5 @@ public class MainMenuController : MonoBehaviour
         HostWaitSetup.ConfigureButton("Back", CancelHosting);
 
     }
-
     #endregion
-
-
 }

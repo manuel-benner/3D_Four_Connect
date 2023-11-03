@@ -15,9 +15,6 @@ namespace Assets.Scripts
     /// </summary>
     public class MenuElement : MonoBehaviour
     {
-        UnityAction<GameObject> ChangeAction;
-
-
         private void Start()
         {
             
@@ -31,11 +28,15 @@ namespace Assets.Scripts
             btn.onClick.AddListener(ButtonOnclick);
         }
 
+        public void SetButton(string Name, bool active)
+        {
+            GetButtonByName(Name).enabled = active;
+        }
+
         public void ChangeToGameObject(string ButtonName, GameObject otherGameObj)
         {
             Button btn = GetButtonByName(ButtonName);
-            ChangeAction = ChangeTo;
-            btn.onClick.AddListener(() => ChangeAction(otherGameObj));
+            btn.onClick.AddListener(() => ChangeTo(otherGameObj));
         }
 
         private void ChangeTo(GameObject changeTo)

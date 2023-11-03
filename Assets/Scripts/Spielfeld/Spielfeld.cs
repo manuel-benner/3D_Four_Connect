@@ -14,7 +14,7 @@ public class Spielfeld : MonoBehaviour
     public delegate void onReset();
     public static event onReset OnReset;
 
-    public delegate void onWin();
+    public delegate void onWin(Spielfeld.Status Winner);
     public static event onWin OnWin;
 
     public delegate void onDraw();
@@ -59,7 +59,7 @@ public class Spielfeld : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            
+
         }
     }
 
@@ -91,10 +91,11 @@ public class Spielfeld : MonoBehaviour
                         turnNumber++;
                         if (gameOverByWin())
                         {
+                            OnWin?.Invoke(Instance.myStatus);
                             Spielfeld.Instance.myStatus = Spielfeld.Status.gameOverWin;
 
                             Debug.Log("Game over by win");
-                            OnWin?.Invoke();
+                            
                         }
                         else if (gameOverByDraw())
                         {
@@ -137,7 +138,6 @@ public class Spielfeld : MonoBehaviour
         {
             Destroy(sphere);
         }
-        OnReset();
         if (NetworkManager.Singleton.IsServer)
         {
             Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
@@ -146,6 +146,7 @@ public class Spielfeld : MonoBehaviour
         {
             Spielfeld.Instance.myStatus = Spielfeld.Status.opponentTurn;
         }
+        OnReset();
         OnNewTurn();
     }
 

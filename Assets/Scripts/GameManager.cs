@@ -74,8 +74,8 @@ public class GameManager : NetworkBehaviour
         else if(Spielfeld.Instance.myStatus == Spielfeld.Status.opponentTurn)
         {
             Spielfeld.Instance.placedSphere = false;
-            Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
             Spielfeld.Instance.HandleSphereSpawn(sphereIdentifier);
+            Spielfeld.Instance.myStatus = Spielfeld.Status.myTurn;
             Spielfeld.Instance.NewTurn();
         }
         Debug.Log(Spielfeld.Instance.myStatus);

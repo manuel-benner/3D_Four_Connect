@@ -2286,7 +2286,6 @@ MonoBehaviour:
   JoinScreen: {fileID: 20476656}
   ClientWaitScreen: {fileID: 1122272458}
   ErrorBox: {fileID: 906014762}
-  NetworkManagerObj: {fileID: 1922465686}
 --- !u!1 &520666930
 GameObject:
   m_ObjectHideFlags: 0
@@ -4321,7 +4320,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ErrorBox: {fileID: 906014762}
   NetworkGameSelection: {fileID: 776654384}
-  NetworkManagerObj: {fileID: 1922465686}
 --- !u!114 &1122272461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4693,10 +4691,10 @@ RectTransform:
   - {fileID: 1992193362}
   m_Father: {fileID: 16348088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 249.61597}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 910, y: -439.13602}
+  m_SizeDelta: {x: 1820, y: 249.61597}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236606792
 MonoBehaviour:
@@ -5830,7 +5828,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelString: Spielfeld
   NetworkSelection: {fileID: 776654384}
-  NetworkManagerObj: {fileID: 1922465686}
 --- !u!1 &1557339913
 GameObject:
   m_ObjectHideFlags: 0
@@ -6548,10 +6545,10 @@ RectTransform:
   - {fileID: 487780452}
   m_Father: {fileID: 16348088}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 249.61597}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 910, y: -169.712}
+  m_SizeDelta: {x: 1820, y: 249.61597}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1633099766
 MonoBehaviour:
@@ -7462,7 +7459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 910, y: -434.42395}
+  m_AnchoredPosition: {x: 910, y: -434.424}
   m_SizeDelta: {x: 1820, y: 230}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1811394214
@@ -8049,6 +8046,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NetworkManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1253649082009807125, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
+      propertyPath: m_TagString
+      value: NetworkManager
+      objectReference: {fileID: 0}
     - target: {fileID: 6055028659446145255, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.99999994
@@ -8102,11 +8103,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
---- !u!1 &1922465686 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1253649082009807125, guid: 2b143bd4677196b4aa5a4a20ac1e6ddd, type: 3}
-  m_PrefabInstance: {fileID: 1884253287}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1926829939
 GameObject:
   m_ObjectHideFlags: 0

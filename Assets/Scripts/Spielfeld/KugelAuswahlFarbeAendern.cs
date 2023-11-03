@@ -10,6 +10,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     public Material unhoveredMat;
     public Material hoveredMatPlayer1;
     public Material hoveredMatPlayer2;
+    public bool active;
 
     public string sphereIdentifier;
 
@@ -19,7 +20,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        active = true;
         rend = GetComponent<Renderer>();
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;
@@ -34,7 +35,7 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
+        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn && active)
         {
             if (NetworkManager.Singleton.IsServer)
             {
@@ -53,12 +54,11 @@ public class KugelAuswahlFarbeAendern : MonoBehaviour
     {
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;
-
     }
 
     private void OnMouseDown()
     {
-        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn)
+        if (Spielfeld.Instance.myStatus == Spielfeld.Status.myTurn && active)
         {
             Spielfeld.Instance.placedSphere = true;
 

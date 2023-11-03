@@ -10,6 +10,7 @@ TagManager:
   - InputUI
   - GespawnteKugel
   - VirtualCameras
+  - NetworkManager
   layers:
   - Default
   - TransparentFX

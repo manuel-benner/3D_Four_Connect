@@ -9,6 +9,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
     public Material hoveredMatPlayer2;
     public GameObject prefabToSpawnPlayer1;
     public GameObject prefabToSpawnPlayer2;
+    public bool active;
 
     public string sphereIdentifier;
 
@@ -23,6 +24,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
 
     private void OnEnable()
     {
+        active = true;
         rend = GetComponent<Renderer>();
         currentMaterial = new Material(unhoveredMat);
         rend.material = currentMaterial;
@@ -37,7 +39,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
     // Swap to opaque material if being hovered
     private void OnMouseEnter()
     {
-        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2)
+        if ((Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2) && active)
         {
             if (Spielfeld_Hotseat.Instance.turnNumber % 2 == 0)
             {
@@ -61,7 +63,7 @@ public class KugelAuswahlFarbeAendernHotseat : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2)
+        if ((Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player1 || Spielfeld_Hotseat.Instance.myStatus == Spielfeld_Hotseat.status.Player2) && active)
         {
             if (Spielfeld_Hotseat.Instance.turnNumber % 2 == 0)
             {

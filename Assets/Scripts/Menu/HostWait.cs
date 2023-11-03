@@ -13,11 +13,8 @@ public class HostWait : MonoBehaviour
 
     [SerializeField] GameObject NetworkSelection;
 
-    [SerializeField] GameObject NetworkManagerObj;
-
     private void OnEnable()
     {
-        NetworkManagerObj.SetActive(true);
         if (secondsUntilTimeout == null)
         {
             secondsUntilTimeout = 5f;
@@ -59,7 +56,6 @@ public class HostWait : MonoBehaviour
     public void Exit()
     {
         NetworkManager.Singleton.Shutdown();
-        NetworkManagerObj.SetActive(false);
         NetworkSelection.SetActive(true);
         gameObject.SetActive(false);
     }

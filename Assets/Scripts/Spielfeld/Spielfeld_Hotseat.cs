@@ -15,7 +15,7 @@ public class Spielfeld_Hotseat : MonoBehaviour
     public delegate void onNewTurn();
     public static event onNewTurn OnNewTurn;
 
-    public delegate void onWin();
+    public delegate void onWin(Spielfeld_Hotseat.status Winner);
     public static event onWin OnWin;
 
     public delegate void onDraw();
@@ -92,8 +92,9 @@ public class Spielfeld_Hotseat : MonoBehaviour
                             turnNumber++;
                             if (gameOverByWin())
                             {
+                                OnWin?.Invoke(Instance.myStatus);
                                 Spielfeld_Hotseat.Instance.myStatus = Spielfeld_Hotseat.status.gameOverWin;
-                                OnWin?.Invoke();
+                                
                             }
                             else if (gameOverByDraw())
                             {

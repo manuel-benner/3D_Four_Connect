@@ -18,14 +18,11 @@ public class ClientWait : MonoBehaviour
 
     [SerializeField] GameObject NetworkGameSelection;
 
-    [SerializeField] GameObject NetworkManagerObj;
-
     private NetworkEventListener networkEventClass;
 
     // Start is called before the first frame update
     private void OnEnable()
     {
-        NetworkManagerObj.SetActive(true);
         clientconnected = false;
         StartTime = Time.time;
         if (secondsUntilTimeout == null)
@@ -44,7 +41,6 @@ public class ClientWait : MonoBehaviour
 
     private void OnDisable()
     {
-        NetworkManagerObj.SetActive(false);
         networkEventClass.RemoveEvents();
     }
 
@@ -63,7 +59,6 @@ public class ClientWait : MonoBehaviour
 
     public void Back()
     {
-        NetworkManagerObj.SetActive(false);
         gameObject.SetActive(false);
         NetworkGameSelection.SetActive(true);
     }
