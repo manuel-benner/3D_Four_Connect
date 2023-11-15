@@ -81,10 +81,9 @@ public class UI_Controller: MonoBehaviour
         }
         menuCallable = true;
         StartCoroutine(SetPlayerTurn());
-
     }
-    #region Game Events
 
+    #region Game Events
     IEnumerator SetPlayerTurn()
     {
         yield return new WaitForSeconds(Time.deltaTime);
@@ -164,7 +163,6 @@ public class UI_Controller: MonoBehaviour
             CustomConfirmationScreen(Message, GameObjectsToStartState, ButtonMethodLeaveGame);
         }
     }
-
     #endregion
 
     private void PauseMenuSetup()

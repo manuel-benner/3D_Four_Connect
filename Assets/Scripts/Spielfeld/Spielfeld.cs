@@ -167,9 +167,9 @@ public class Spielfeld : MonoBehaviour
 
     private bool CheckHorizontalWin()
     {
-        for (int x = 0; x < 4; x++)
+        for (int y = 0; y < 4; y++)
         {
-            for (int y = 0; y < 4; y++)
+            for (int x = 0; x < 4; x++)
             {
                 if (threeDMatrix[x,y,0] != -1)
                 {
@@ -177,6 +177,20 @@ public class Spielfeld : MonoBehaviour
                     if (threeDMatrix[x, y, 1] % 2 == colour &&
                         threeDMatrix[x, y, 2] % 2 == colour &&
                         threeDMatrix[x, y, 3] % 2 == colour)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            for (int z = 0; z < 4; z++)
+            {
+                if (threeDMatrix[0, y, z] != -1)
+                {
+                    int colour = threeDMatrix[0, y, z] % 2;
+                    if (threeDMatrix[1, y, z] % 2 == colour &&
+                        threeDMatrix[2, y, z] % 2 == colour &&
+                        threeDMatrix[3, y, z] % 2 == colour)
                     {
                         return true;
                     }

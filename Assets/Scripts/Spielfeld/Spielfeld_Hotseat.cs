@@ -158,14 +158,25 @@ public class Spielfeld_Hotseat : MonoBehaviour
 
     private bool CheckHorizontalWin(int player)
     {
-        for (int x = 0; x < 4; x++)
+        for (int y = 0; y < 4; y++)
         {
-            for (int y = 0; y < 4; y++)
+            for (int x = 0; x < 4; x++)
             {
                 if (threeDMatrix[x, y, 0] % 2 == player &&
                     threeDMatrix[x, y, 1] % 2 == player &&
                     threeDMatrix[x, y, 2] % 2 == player &&
                     threeDMatrix[x, y, 3] % 2 == player)
+                {
+                    return true;
+                }
+            }
+
+            for (int z = 0; z < 4; z++)
+            {
+                if (threeDMatrix[0, y, z] % 2 == player &&
+                    threeDMatrix[1, y, z] % 2 == player &&
+                    threeDMatrix[2, y, z] % 2 == player &&
+                    threeDMatrix[3, y, z] % 2 == player)
                 {
                     return true;
                 }

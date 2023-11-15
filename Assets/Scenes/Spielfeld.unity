@@ -15213,6 +15213,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Overlays
       objectReference: {fileID: 0}
+    - target: {fileID: 4947455564159932360, guid: 7ad7ca0cc3969ff41b2ba53e9d794f8a, type: 3}
+      propertyPath: NetworkActivated
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5151918650290980894, guid: 7ad7ca0cc3969ff41b2ba53e9d794f8a, type: 3}
       propertyPath: m_Pivot.x
       value: 0
